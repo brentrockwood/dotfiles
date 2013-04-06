@@ -1,0 +1,11 @@
+[user]
+	name = Brent Rockwood
+	email = brent@brentrockwood.com
+[core]
+	editor = mvim --remote-tab-wait-silent
+	excludesfile = ~/.gitignore
+[color]
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto

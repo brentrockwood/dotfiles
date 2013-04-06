@@ -1,0 +1,62 @@
+# Get platform info.
+platform='unknown'
+unamestr=$(uname)
+if [[ "$unamestr" == Linux ]]; then
+  platform='linux'
+elif [[ "$unamestr" == 'FreeBSD' ]]; then
+  platform='bsd'
+elif [[ "$unamestr" == 'Darwin' ]]; then
+  platform='mac'
+fi
+
+unset unamestr
+
+# Check for color support.
+if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+  color_prompt=yes
+else
+  color_prompt=
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1='\n${debian_chroot:+($debian_chroot)}\[\e[01;32m\]\u@\h\[\e[00m\] \[\e[01;34m\]\w \$\[\e[00m\] '
+else
+    PS1='\n${debian_chroot:+($debian_chroot)}\u@\h: \w \$ '
+fi
+
+unset color_prompt
+
+# Vim
+if [[ $platform == 'mac' ]]; then
+  alias vim='mvim --remote-tab-silent'
+  alias vi='mvim --remote-tab-silent'
+else
+  alias vim='~/Projects/vim/src/vim'
+  alias vi='~/Projects/vim/src/vim'
+fi
+
+if [[ $platform == 'linux' ]]; then
+  alias ls='ls --color=auto'
+elif [[ $platform == 'bsd' ]] || [[ $platform == 'mac' ]]; then
+  alias ls='ls -G'
+fi
+
+# Source keys, etc.
+if [ -s ~/.private_env ]; then
+  source ~/.private_env
+fi
+
+# RVM
+if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
+  source "$HOME/.rvm/scripts/rvm"
+fi
+
+# MacPorts
+if [[ -d /opt/local/ ]]; then
+  export PATH=/opt/local/bin:/opt/local/sbin:~/.bin:$PATH
+fi
+
+# Heroku
+if [[ -d /usr/local/heroku/bin ]]; then
+  export PATH="/usr/local/heroku/bin:$PATH"
+fi
