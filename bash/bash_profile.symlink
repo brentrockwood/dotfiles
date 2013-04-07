@@ -50,7 +50,7 @@ fi
 
 # MacPorts
 if [[ -d /opt/local/ ]]; then
-  export PATH="/opt/local/bin:/opt/local/sbin:~/.bin:$PATH"
+  export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
 fi
 
 # Heroku
@@ -61,5 +61,10 @@ fi
 # Git
 if [[ -s /usr/share/git-core/git-completion.bash ]]; then
   source /usr/share/git-core/git-completion.bash
+fi
+
+# Local user bin should always be first.
+if [[ -d "$HOME/.bin" ]]; then
+  export PATH="$HOME/.bin:$PATH"
 fi
 
