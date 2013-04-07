@@ -25,7 +25,9 @@ let mapleader = ","
 nnoremap <leader>w :bd<CR>
 colorscheme br
 set guifont=Courier:h14
-
+"turn off scrollbars
+set guioptions+=LlRrb
+set guioptions-=LlRrb 
 "folding settings
 set foldmethod=indent
 set foldnestmax=10
