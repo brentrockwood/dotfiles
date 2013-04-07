@@ -19,6 +19,8 @@ hi CursorLine	guibg=#D8D8DD
 hi CursorColumn	guibg=#E8E8EE
 " }}}
 
+hi ColorColumn guibg=#f9f9f9 
+
 " {{{ Diff
 hi DiffAdd         guifg=#003300 guibg=#DDFFDD gui=none
 hi DiffChange                    guibg=#ececec gui=none
