@@ -30,9 +30,6 @@ unset color_prompt
 if [[ $platform == 'mac' ]]; then
   alias vim='mvim --remote-tab-silent'
   alias vi='mvim --remote-tab-silent'
-else
-  alias vim='~/Projects/vim/src/vim'
-  alias vi='~/Projects/vim/src/vim'
 fi
 
 if [[ $platform == 'linux' ]]; then
