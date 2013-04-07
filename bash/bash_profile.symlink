@@ -26,21 +26,21 @@ fi
 
 unset color_prompt
 
-# Vim
-if [[ $platform == 'mac' ]]; then
-  alias vim='mvim --remote-tab-silent'
-  alias vi='mvim --remote-tab-silent'
-fi
-
 if [[ $platform == 'linux' ]]; then
   alias ls='ls --color=auto'
 elif [[ $platform == 'bsd' ]] || [[ $platform == 'mac' ]]; then
   alias ls='ls -G'
 fi
 
-# Source keys, etc.
+# API keys, etc.
 if [ -s ~/.private_env ]; then
   source ~/.private_env
+fi
+
+# Vim
+if [[ $platform == 'mac' ]]; then
+  alias vim='mvim --remote-tab-silent'
+  alias vi='mvim --remote-tab-silent'
 fi
 
 # RVM
@@ -50,7 +50,7 @@ fi
 
 # MacPorts
 if [[ -d /opt/local/ ]]; then
-  export PATH=/opt/local/bin:/opt/local/sbin:~/.bin:$PATH
+  export PATH="/opt/local/bin:/opt/local/sbin:~/.bin:$PATH"
 fi
 
 # Heroku
