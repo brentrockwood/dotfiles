@@ -32,6 +32,9 @@ elif [[ $platform == 'bsd' ]] || [[ $platform == 'mac' ]]; then
   alias ls='ls -G'
 fi
 
+# Vi edit mode.
+set -o vi
+
 # API keys, etc.
 if [ -s ~/.private_env ]; then
   source ~/.private_env
