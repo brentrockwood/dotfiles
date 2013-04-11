@@ -33,3 +33,8 @@ set foldmethod=indent
 set foldnestmax=10
 set nofoldenable
 set foldlevel=1
+
+"underline
+nnoremap <leader>1 yypVr=
+"set jj to esc insert mode
+inoremap jj <ESC>
