@@ -38,3 +38,16 @@ set foldlevel=1
 nnoremap <leader>1 yypVr=
 "set jj to esc insert mode
 inoremap jj <ESC>
+
+"search stuff from Steve Losh
+nnoremap / /\v
+vnoremap / /\v
+set ignorecase
+set smartcase
+set gdefault
+set incsearch
+set showmatch
+set hlsearch
+nnoremap <leader><space> :noh<cr>
+nnoremap <tab> %
+vnoremap <tab> %
