@@ -51,3 +51,6 @@ set hlsearch
 nnoremap <leader><space> :noh<cr>
 nnoremap <tab> %
 vnoremap <tab> %
+
+"reload vimrc when I save it.
+au! BufWritePost .vimrc source %
