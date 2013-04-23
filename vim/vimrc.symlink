@@ -54,3 +54,6 @@ vnoremap <tab> %
 
 "reload vimrc when I save it.
 au! BufWritePost .vimrc source %
+
+"uppercase inner word
+:inoremap <C-u> <esc>gUiwwa
