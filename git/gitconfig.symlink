@@ -2,7 +2,7 @@
 	name = Brent Rockwood
 	email = brent@brentrockwood.com
 [core]
-	editor = mvim --remote-tab-wait-silent
+	editor = mvim -f
 	excludesfile = ~/.gitignore
 [color]
 	branch = auto
