@@ -51,11 +51,6 @@ if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
   source "$HOME/.rvm/scripts/rvm"
 fi
 
-# PHP
-if [[ `which php54` ]]; then
-  alias php='php54'
-fi
-
 # MacPorts
 if [[ -d /opt/local/ ]]; then
   export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
