@@ -2,10 +2,11 @@
 	name = Brent Rockwood
 	email = brent@brentrockwood.com
 [core]
-	editor = mvim -f
+	editor = vi
 	excludesfile = ~/.gitignore
 [color]
 	branch = auto
 	diff = auto
 	interactive = auto
 	status = auto
+
