@@ -19,3 +19,6 @@
 [submodule "vim/vim.symlink/bundle/vim-sensible"]
 	path = vim/vim.symlink/bundle/vim-sensible
 	url = git://github.com/tpope/vim-sensible.git
+[submodule "vim/vim.symlink/bundle/CSApprox"]
+	path = vim/vim.symlink/bundle/CSApprox
+	url = https://github.com/godlygeek/csapprox
