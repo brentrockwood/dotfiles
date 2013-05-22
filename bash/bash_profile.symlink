@@ -66,6 +66,10 @@ if [[ -s /usr/share/git-core/git-completion.bash ]]; then
   source /usr/share/git-core/git-completion.bash
 fi
 
+# EC2
+export EC2_HOME=~/Downloads/ec2-api-tools-1.6.7.2/
+export JAVA_HOME=`/usr/libexec/java_home -v 1.6`
+
 # Local user bin should always be first.
 if [[ -d "$HOME/.bin" ]]; then
   export PATH="$HOME/.bin:$PATH"
