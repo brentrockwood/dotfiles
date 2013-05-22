@@ -45,6 +45,10 @@ if [[ $platform == 'mac' ]]; then
   alias vim='mvim --remote-tab-silent'
   alias vi='mvim --remote-tab-silent'
 fi
+# VirtualBox
+if command -v VBoxManage > /dev/null; then
+  alias vbox='VBoxManage'
+fi
 
 # RVM
 if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
