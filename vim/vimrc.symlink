@@ -18,6 +18,7 @@ set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set colorcolumn=80
+set linebreak
 set expandtab
 set wildignore+=.git,node_modules
 set linespace=3
@@ -56,4 +57,10 @@ vnoremap <tab> %
 au! BufWritePost .vimrc source %
 
 "uppercase inner word
-:inoremap <C-u> <esc>gUiwwa
+inoremap <C-u> <esc>gUiwwa
+
+"make clipboard work with OSX
+set clipboard=unnamed
+
+set mouse=a
+
