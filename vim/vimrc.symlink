@@ -57,7 +57,7 @@ nnoremap <C-b> :CtrlPBuffer<cr>
 au! BufWritePost .vimrc source %
 
 "uppercase inner word
-inoremap <C-u> <esc>gUiwwa
+inoremap <C-U> <Esc>gUiw`]a
 
 "make clipboard work with OSX
 set clipboard=unnamed
