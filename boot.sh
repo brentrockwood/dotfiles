@@ -5,6 +5,9 @@ set -e
 
 root=$( cd $(dirname $0) ; pwd -P )
 
+git submodule init
+git submodule update
+
 link () {
   ln -s $1 $2
   echo "Linked $1 to $2"
