@@ -22,3 +22,6 @@
 [submodule "vim/vim.symlink/bundle/CSApprox"]
 	path = vim/vim.symlink/bundle/CSApprox
 	url = https://github.com/godlygeek/csapprox
+[submodule "zsh/oh-my-zsh.symlink"]
+	path = zsh/oh-my-zsh.symlink
+	url = git://github.com/robbyrussell/oh-my-zsh.git
