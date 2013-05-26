@@ -20,7 +20,7 @@ skip_all=false
 for src in `find $root -maxdepth 2 -name \*.symlink`; do
   dest="$HOME/.`basename \"${src%.*}\"`"
 
-  if [ ! -f $dest ] && [ ! -d $dest ]; then
+  if [ ! -f $dest ] && [ ! -d $dest ] && [ ! -h $dest ]; then
     link $src $dest
   else
     overwrite=false
