@@ -7,7 +7,7 @@ ZSH_THEME_GIT_PROMPT_SUFFIX=""
 ZSH_THEME_GIT_PROMPT_DIRTY=" %{$fg[red]%}!"
 ZSH_THEME_GIT_PROMPT_BEHIND_REMOTE=" %{$fg[red]%}-"
 ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE=" %{$fg[red]%}+"
-ZSH_THEME_GIT_PROMPT_BEHIND_REMOTE=" %{$fg[red]%}x"
+ZSH_THEME_GIT_PROMPT_DIVERGED_REMOTE=" %{$fg[red]%}x"
 
 local return_status="%{$fg[red]%}%(?..✘)%{$reset_color%}"
 RPROMPT='${return_status}%{$reset_color%}'
