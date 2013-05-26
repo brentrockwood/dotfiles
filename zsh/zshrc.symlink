@@ -48,8 +48,15 @@ if [[ -s /usr/share/git-core/git-completion.bash ]]; then
 fi
 
 # EC2
-export EC2_HOME=~/Downloads/ec2-api-tools-1.6.7.2/
-export JAVA_HOME=`/usr/libexec/java_home -v 1.6`
+if [[ -d /Downloads/ec2-api-tools-1.6.7.2/ ]]; then
+  export EC2_HOME=~/Downloads/ec2-api-tools-1.6.7.2/
+fi
+
+# JAVA
+
+if [[ -s /usr/libexec/java_home ]]; then
+  export JAVA_HOME=`/usr/libexec/java_home -v 1.6`
+fi
 
 # Local user bin should always be first.
 if [[ -d "$HOME/.bin" ]]; then
