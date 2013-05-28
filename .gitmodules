@@ -28,3 +28,6 @@
 [submodule "vim/vim.symlink/bundle/syntastic"]
 	path = vim/vim.symlink/bundle/syntastic
 	url = git://github.com/scrooloose/syntastic.git
+[submodule "vim/vim.symlink/bundle/vim-zsh"]
+	path = vim/vim.symlink/bundle/vim-zsh
+	url = git://github.com/clones/vim-zsh.git
