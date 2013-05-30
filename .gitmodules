@@ -31,3 +31,6 @@
 [submodule "vim/vim.symlink/bundle/vim-zsh"]
 	path = vim/vim.symlink/bundle/vim-zsh
 	url = git://github.com/clones/vim-zsh.git
+[submodule "vim/vim.symlink/bundle/vim-surround"]
+	path = vim/vim.symlink/bundle/vim-surround
+	url = git://github.com/tpope/vim-surround.git
