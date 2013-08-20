@@ -1,11 +1,18 @@
 autoload -U colors && colors
 
+function git_prompt_status_styled() {
+  promptStatus="$(git_prompt_status)"
+  if [ "$promptStatus" ] ; then
+    echo %{$fg[yellow]%}$promptStatus%{$fg[yellow]%}%{$reset_color%}
+  fi
+}
+
 function git_prompt_status() {
   gitstatus="$(git status -zb 2>/dev/null)"
 
-  if [ -n $gitstatus ] ; then
+  if [[ ($? -eq 0) && (-n $gitstatus) ]] ; then
     lines=("${(0)gitstatus}")
-
+  
     for line in $lines; do
       fields=("${(z)line}")
 
@@ -24,7 +31,7 @@ function git_prompt_status() {
       esac
     done
 
-    echo on $name %{$fg[red]%}$dirty $untracked $(git_repo_delta) $(git_merge_status) $(git_stash_count)%{$reset_color%}
+    echo $name %{$fg[red]%}$dirty $untracked $(git_repo_delta) $(git_merge_status) $(git_stash_count)%{$reset_color%}
   fi
 }
 
@@ -59,7 +66,7 @@ git_stash_count() {
   fi
 }
 
-prompt='%F{white}%~ $(git_prompt_status)
+prompt='%F{green}%~ $(git_prompt_status_styled)
 %F{white}%n@%m %f'
 
 local return_status="%{$fg[red]%}%(?..✘)%{$reset_color%}"
