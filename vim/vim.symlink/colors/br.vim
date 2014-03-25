@@ -69,7 +69,7 @@ hi Identifier	guifg=#0086B3
 hi PreProc		guifg=#A0A0A0 gui=bold
 hi Comment		guifg=#999988 gui=italic
 hi Constant		guifg=#177F80 gui=none
-hi String		guifg=#D81745
+hi String		guifg=#800000
 hi Function		guifg=#990000 gui=bold
 hi Statement	guifg=#000000 gui=bold
 hi Type			guifg=#445588 gui=bold
