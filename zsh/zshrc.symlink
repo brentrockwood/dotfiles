@@ -52,12 +52,6 @@ if [[ -d /Downloads/ec2-api-tools-1.6.7.2/ ]]; then
   export EC2_HOME=~/Downloads/ec2-api-tools-1.6.7.2/
 fi
 
-# JAVA
-
-if [[ -s /usr/libexec/java_home ]]; then
-  export JAVA_HOME=`/usr/libexec/java_home -v 1.6`
-fi
-
 # Local user bin should always be first.
 if [[ -d "$HOME/.bin" ]]; then
   export PATH="$HOME/.bin:$PATH"
