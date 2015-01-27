@@ -20,7 +20,7 @@ set softtabstop=2
 set colorcolumn=80
 set linebreak
 set expandtab
-set wildignore+=.git,node_modules
+set wildignore+=.git,node_modules,bower_components
 set linespace=3
 let mapleader = ","
 nnoremap <leader>w :bd<CR>
