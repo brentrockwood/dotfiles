@@ -54,6 +54,6 @@ fi
 
 # Local user bin should always be first.
 if [[ -d "$HOME/.bin" ]]; then
-  export PATH="$HOME/.bin:$PATH"
+  export PATH="$PATH:$HOME/.rvm/bin:$HOME/.bin:$PATH"
 fi
 
