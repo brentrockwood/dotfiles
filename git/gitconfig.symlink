@@ -4,6 +4,7 @@
 [core]
 	editor = vi
 	excludesfile = ~/.gitignore
+  pager = 
 [color]
 	branch = auto
 	diff = auto
