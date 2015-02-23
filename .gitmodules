@@ -43,3 +43,6 @@
 [submodule "vim/vim.symlink/bundle/vim-jade"]
 	path = vim/vim.symlink/bundle/vim-jade
 	url = https://github.com/digitaltoad/vim-jade
+[submodule "vim/vim.symlink/bundle/lastplace"]
+	path = vim/vim.symlink/bundle/lastplace
+	url = https://github.com/dietsche/vim-lastplace
