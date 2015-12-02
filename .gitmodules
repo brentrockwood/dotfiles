@@ -12,7 +12,7 @@
 	url = https://github.com/groenewege/vim-less
 [submodule "vim/vim.symlink/bundle/vim-literate-coffeescript"]
 	path = vim/vim.symlink/bundle/vim-literate-coffeescript
-	url = https://github.com/mintplant/vim-literate-coffeescript.git
+	url = https://github.com/rhoward/vim-literate-coffeescript.git
 [submodule "vim/vim.symlink/bundle/vim-markdown"]
 	path = vim/vim.symlink/bundle/vim-markdown
 	url = https://github.com/tpope/vim-markdown.git
