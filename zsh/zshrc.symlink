@@ -3,7 +3,7 @@ export ZSH_CUSTOM="$HOME/.zsh_custom"
 export ZSH_THEME="br"
 export OH_MY_ZSH_DEBUG="true"
 
-plugins=(git macports mysql-macports vi-mode colorize)
+plugins=(git brew npm vi-mode colorize docker docker-compose)
 source $ZSH/oh-my-zsh.sh
 
 if [[ $(uname) == 'Linux' ]]; then
