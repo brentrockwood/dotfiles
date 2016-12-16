@@ -57,3 +57,4 @@ if [[ -d "$HOME/.bin" ]]; then
   export PATH="$PATH:$HOME/.rvm/bin:$HOME/.bin:$PATH"
 fi
 
+source /Users/brrockwood/.gulp-autocompletion-zsh/gulp-autocompletion.zsh

@@ -20,7 +20,7 @@ set softtabstop=2
 set colorcolumn=80
 set linebreak
 set expandtab
-set wildignore+=.git,node_modules,bower_components,data,dist
+set wildignore+=.git,node_modules,bower_components,data,dist,built
 set linespace=3
 let mapleader = ","
 nnoremap <leader>w :bd<CR>
@@ -56,6 +56,9 @@ nnoremap <C-b> :CtrlPBuffer<cr>
 "reload vimrc when I save it.
 au! BufWritePost .vimrc source %
 
+"run make
+"nnoremap <C-m> :make<cr><cr>
+
 "uppercase inner word
 inoremap <C-U> <Esc>gUiw`]a
 
@@ -66,3 +69,6 @@ set mouse=a
 
 set exrc            " enable per-directory .vimrc files
 set secure          " disable unsafe commands in local .vimrc files
+
+"autocmd QuickFixCmdPost [^l]* nested cwindow
+"autocmd QuickFixCmdPost    l* nested lwindow
