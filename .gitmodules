@@ -46,3 +46,12 @@
 [submodule "vim/vim.symlink/bundle/lastplace"]
 	path = vim/vim.symlink/bundle/lastplace
 	url = https://github.com/dietsche/vim-lastplace
+[submodule "vim/vim.symlink/bundle/tsuquyomi"]
+	path = vim/vim.symlink/bundle/tsuquyomi
+	url = git@github.com:Quramy/tsuquyomi.git
+[submodule "vim/vim.symlink/bundle/typescript-vim"]
+	path = vim/vim.symlink/bundle/typescript-vim
+	url = git@github.com:leafgarland/typescript-vim.git
+[submodule "vim/vim.symlink/bundle/vimproc.vim"]
+	path = vim/vim.symlink/bundle/vimproc.vim
+	url = git@github.com:Shougo/vimproc.vim.git
