@@ -72,3 +72,6 @@ set secure          " disable unsafe commands in local .vimrc files
 
 "autocmd QuickFixCmdPost [^l]* nested cwindow
 "autocmd QuickFixCmdPost    l* nested lwindow
+
+" Trim trailing whitespace from TypeScript files.
+autocmd BufWritePre *.ts %s/\s\+$//e
