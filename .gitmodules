@@ -24,10 +24,10 @@
 	url = https://github.com/godlygeek/csapprox
 [submodule "zsh/oh-my-zsh.symlink"]
 	path = zsh/oh-my-zsh.symlink
-	url = git://github.com/robbyrussell/oh-my-zsh.git
+  url = https://github.com/ohmyzsh/ohmyzsh.git
 [submodule "vim/vim.symlink/bundle/syntastic"]
 	path = vim/vim.symlink/bundle/syntastic
-	url = git://github.com/scrooloose/syntastic.git
+	url = https://github.com/scrooloose/syntastic.git
 [submodule "vim/vim.symlink/bundle/vim-zsh"]
 	path = vim/vim.symlink/bundle/vim-zsh
 	url = git://github.com/clones/vim-zsh.git
