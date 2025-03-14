@@ -1,23 +1,24 @@
-#!/bin/bash
+#!/bin/zsh
 
 # abort on error
 set -e
 
-root=$( cd $(dirname $0) ; pwd -P )
+root=$( cd "$(dirname "${(%):-%x}")" ; pwd -P )
 
-git submodule init
-git submodule update
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-link () {
-  ln -s $1 $2
-  echo "Linked $1 to $2"
-}
+alias get_idf='. ~/esp/esp-idf/export.sh'
+
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
 
 overwrite_all=false
 backup_all=false
 skip_all=false
 
-for src in `find $root -maxdepth 2 -name \*.symlink`; do
+for src in `find $root -maxdepth 2 -name \*.symlink 2>/dev/null`; do
   dest="$HOME/.`basename \"${src%.*}\"`"
 
   if [ ! -f $dest ] && [ ! -d $dest ] && [ ! -h $dest ]; then
