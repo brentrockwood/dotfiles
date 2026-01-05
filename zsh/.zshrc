@@ -45,7 +45,7 @@ compinit
 # --- Optional tools (add one at a time) ----------------------------
 
 # zoxide (directory jumping)
-# eval "$(zoxide init zsh)"
+eval "$(zoxide init zsh)"
 
 # fzf (history, completion)
 # source <(fzf --zsh)
