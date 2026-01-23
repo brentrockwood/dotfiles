@@ -63,9 +63,24 @@ if [[ -f "$HOME/.zshrc.local" ]]; then
   source "$HOME/.zshrc.local"
 fi
 
+# --- Make directory and immediately move to it -------------------- 
+
+mmdir() {
+  mkdir -p "$1"
+  cd "$1"
+}
+
 # --- Prompt (Starship) --------------------------------------------
 
 if command -v starship >/dev/null 2>&1; then
   eval "$(starship init zsh)"
 fi
 
+
+# opencode
+export PATH=$HOME/.opencode/bin:$PATH
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=($HOME/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
