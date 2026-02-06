@@ -15,12 +15,13 @@ fi
 
 setopt autocd
 setopt extendedglob
-setopt histignorealldups
-setopt sharehistory
+setopt SHARE_HISTORY        # Share history between all sessions
+setopt INC_APPEND_HISTORY    # Immediately append to history file
 
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE="$HOME/.zsh_history"
+HISTCONTROL=ignoredups:erasedups
 
 # --- Vi-style command line editing --------------------------------
 
@@ -48,7 +49,7 @@ compinit
 eval "$(zoxide init zsh)"
 
 # fzf (history, completion)
-# source <(fzf --zsh)
+source <(fzf --zsh)
 
 # --- Aliases (keep minimal) ---------------------------------------
 
