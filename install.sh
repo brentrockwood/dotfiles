@@ -23,6 +23,7 @@ mkdir -p "$HOME/.config/nvim"
 
 link "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
 link "$DOTFILES_DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua"
+link "$DOTFILES_DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
 
 echo
 echo "✔ Dotfiles installed."
