@@ -57,6 +57,8 @@ alias ls='ls --color=auto'
 alias ll='ls -halt --color=auto'
 alias vi='nvim'
 alias gss='git status'
+alias np='new-project'
+alias cd='z'
 
 # --- Local, machine-specific overrides ----------------------------
 
@@ -79,7 +81,7 @@ fi
 
 
 # opencode
-export PATH=$HOME/.opencode/bin:$PATH
+export PATH=$HOME/.opencode/bin:$HOME/bin:$PATH
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=($HOME/.docker/completions $fpath)
 autoload -Uz compinit
