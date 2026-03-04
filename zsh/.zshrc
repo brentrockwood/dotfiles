@@ -13,15 +13,22 @@ else
   export VISUAL=vi
 fi
 
+# --- History ------------------------------------------------------
 setopt autocd
 setopt extendedglob
 setopt SHARE_HISTORY        # Share history between all sessions
-setopt INC_APPEND_HISTORY    # Immediately append to history file
+# setopt INC_APPEND_HISTORY # Immediately append to history file
+                            # Redundant if SHARE_HISTORY is set
+setopt EXTENDED_HISTORY     # Timestamps
+
+# Ignore duplicates and space-prefixed commands
+setopt HIST_IGNORE_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_IGNORE_SPACE
 
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE="$HOME/.zsh_history"
-HISTCONTROL=ignoredups:erasedups
 
 # --- Vi-style command line editing --------------------------------
 
@@ -35,6 +42,7 @@ function zle-keymap-select {
     viins|main) echo -ne '\e[5 q';; # beam cursor
   esac
 }
+
 zle -N zle-keymap-select
 echo -ne '\e[5 q'  # ensure insert mode cursor on startup
 
@@ -57,8 +65,9 @@ alias ls='ls --color=auto'
 alias ll='ls -halt --color=auto'
 alias vi='nvim'
 alias gss='git status'
-alias np='new-project'
 alias cd='z'
+alias f='fuck'
+alias gco='git checkout'
 
 # --- Local, machine-specific overrides ----------------------------
 
@@ -79,11 +88,15 @@ if command -v starship >/dev/null 2>&1; then
   eval "$(starship init zsh)"
 fi
 
-
 # opencode
+
 export PATH=$HOME/.opencode/bin:$HOME/bin:$PATH
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=($HOME/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
-# End of Docker CLI completions
+
+# Ruby
+
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
+
