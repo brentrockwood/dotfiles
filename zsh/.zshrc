@@ -64,9 +64,10 @@ source <(fzf --zsh)
 alias ls='ls --color=auto'
 alias ll='ls -halt --color=auto'
 alias vi='nvim'
-alias gss='git status'
 alias cd='z'
 alias f='fuck'
+alias cls='clear'
+alias gss='git status'
 alias gco='git checkout'
 
 # --- Local, machine-specific overrides ----------------------------
