@@ -19,7 +19,7 @@ vim.opt.smartcase = true
 vim.opt.cursorline = true
 vim.opt.signcolumn = "yes"
 vim.opt.termguicolors = true
-vim.cmd("colorscheme delek")
+vim.cmd("colorscheme slate")
 
 -- Wrapping
 vim.opt.wrap = true

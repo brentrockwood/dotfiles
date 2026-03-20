@@ -17,12 +17,8 @@ fi
 setopt autocd
 setopt extendedglob
 setopt SHARE_HISTORY        # Share history between all sessions
-# setopt INC_APPEND_HISTORY # Immediately append to history file
-                            # Redundant if SHARE_HISTORY is set
 setopt EXTENDED_HISTORY     # Timestamps
-
-# Ignore duplicates and space-prefixed commands
-setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_DUPS     # Ignore duplicates and space-prefixed commands
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_IGNORE_SPACE
 
@@ -51,24 +47,18 @@ echo -ne '\e[5 q'  # ensure insert mode cursor on startup
 autoload -Uz compinit
 compinit
 
-# --- Optional tools (add one at a time) ----------------------------
-
-# zoxide (directory jumping)
-eval "$(zoxide init zsh)"
-
-# fzf (history, completion)
-source <(fzf --zsh)
-
 # --- Aliases (keep minimal) ---------------------------------------
 
 alias ls='ls --color=auto'
 alias ll='ls -halt --color=auto'
 alias vi='nvim'
 alias cd='z'
+alias j='z'
 alias f='fuck'
 alias cls='clear'
 alias gss='git status'
 alias gco='git checkout'
+alias clc='claude --dangerously-skip-permissions --chrome'
 
 # --- Local, machine-specific overrides ----------------------------
 
@@ -92,6 +82,7 @@ fi
 # opencode
 
 export PATH=$HOME/.opencode/bin:$HOME/bin:$PATH
+#
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=($HOME/.docker/completions $fpath)
 
@@ -100,4 +91,12 @@ fpath=($HOME/.docker/completions $fpath)
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
+
+# --- Optional tools (add one at a time) ----------------------------
+
+# zoxide (directory jumping)
+eval "$(zoxide init zsh)"
+
+# fzf (history, completion)
+source <(fzf --zsh)
 
