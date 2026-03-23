@@ -81,7 +81,7 @@ fi
 
 # opencode
 
-export PATH=$HOME/.opencode/bin:$HOME/bin:$PATH
+export PATH=$HOME/.opencode/bin:$HOME/bin:$HOME/.local/bin:$PATH
 #
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=($HOME/.docker/completions $fpath)
