@@ -41,3 +41,27 @@ vim.keymap.set("i", "jj", "<Esc>", { noremap = true, silent = true, desc = "Exit
 vim.opt.clipboard = "unnamedplus"
 vim.opt.mouse = "a"
 
+-- Scratchpad
+vim.keymap.set("n", "<leader>sc", function()
+  vim.cmd("edit " .. vim.fn.expand("~/.scratchpad.md"))
+end, { desc = "Open scratchpad" })
+
+local scratchpad_augroup = vim.api.nvim_create_augroup("Scratchpad", { clear = true })
+vim.api.nvim_create_autocmd("BufEnter", {
+  group = scratchpad_augroup,
+  pattern = vim.fn.expand("~/tmp/scratch.md"),
+  callback = function()
+    vim.g._prev_colorscheme = vim.g.colors_name
+    vim.cmd("colorscheme darkblue")
+  end,
+})
+vim.api.nvim_create_autocmd("BufLeave", {
+  group = scratchpad_augroup,
+  pattern = vim.fn.expand("~/tmp/scratch.md"),
+  callback = function()
+    if vim.g._prev_colorscheme then
+      vim.cmd("colorscheme " .. vim.g._prev_colorscheme)
+    end
+  end,
+})
+

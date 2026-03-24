@@ -54,6 +54,7 @@ alias ll='ls -halt --color=auto'
 alias vi='nvim'
 alias cd='z'
 alias j='z'
+alias ji='zi'
 alias f='thefuck'
 alias cls='clear'
 alias gss='git status'
@@ -94,9 +95,9 @@ export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
 
 # --- Optional tools (add one at a time) ----------------------------
 
-# zoxide (directory jumping)
-eval "$(zoxide init zsh)"
-
 # fzf (history, completion)
 source <(fzf --zsh)
+
+# zoxide (directory jumping)
+eval "$(zoxide init zsh)"
 
