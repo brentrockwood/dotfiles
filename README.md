@@ -175,3 +175,4 @@ machine-specific paths, etc.). It's sourced automatically and is gitignored.
 - Heavy Neovim distros (LazyVim, AstroNvim)
 - Auto-formatters / linters wired up globally (add per-project as needed)
 - Anything I don't use weekly
+
