@@ -1,0 +1,99 @@
+# Amber-Lyra — tmux color scheme
+# A warm, amber-accented dark theme for tmux.
+# Inspired by Half-Life.
+#
+# Usage: Add to your ~/.tmux.conf or source this file:
+#   source-file ~/path/to/amber-lyra.tmux.conf
+
+# ----------------------------
+# Palette
+# ----------------------------
+#
+# Base (shadcn Lyra)
+#   bg:      #0a0a0a   card:    #171717   surface: #161616
+#   sec:     #262626   accent:  #404040   muted:   #a1a1a1
+#   fg:      #fafafa   amber50: #fffbeb
+#   amber3:  #ffd236   amber4:  #fcbb00   amber5:  #f99c00
+#   amber6:  #dd7400   amber7:  #b75000   amber8:  #953d00
+#   amber9:  #7b3306   amber95: #461901   red:     #ff6568
+#
+# Terminal (ANSI)
+#   black:      #171717   bright-black:   #525252
+#   red:        #e06c75   bright-red:     #ff6568
+#   green:      #7ebe63   bright-green:   #a8d89c
+#   yellow:     #f99c00   bright-yellow:  #ffd236
+#   blue:       #54a2ff   bright-blue:    #90c5ff
+#   magenta:    #c678dd   bright-magenta: #d9a0e8
+#   cyan:       #56b6c2   bright-cyan:    #7ddce4
+#   white:      #a1a1a1   bright-white:   #fafafa
+#
+# Special
+#   cursor:     #f99c00   cursor-text:    #0a0a0a
+#   selection:  #453519   selected-text:  #fafafa
+#   link:       #f99c00   badge:          #f99c00
+#   cursor-guide: #262626
+
+# ----------------------------
+# Status Bar
+# ----------------------------
+set -g status-position top
+set -g status-justify left
+set -g status-style "bg=#171717,fg=#a1a1a1"
+
+# Left: empty (windows render here via status-justify left)
+set -g status-left-length 0
+set -g status-left ""
+
+# Right: indicators + session name
+set -g status-right-length 80
+set -g status-right "\
+#{?client_prefix,#[fg=#ffd236]⌨ ,}\
+#{?pane_synchronized,#[fg=#ff6568]⚏ ,}\
+#[fg=#f99c00,bg=#171717]\
+#[fg=#171717,bg=#f99c00,bold]  #S "
+
+# Window tabs — inactive
+setw -g window-status-format "\
+#[fg=#171717,bg=#0a0a0a]\
+#[fg=#a1a1a1,bg=#0a0a0a] #I  #W \
+#[fg=#0a0a0a,bg=#171717]"
+
+# Window tabs — active (amber glow)
+setw -g window-status-current-format "\
+#[fg=#171717,bg=#dd7400]\
+#[fg=#fffbeb,bg=#dd7400,bold] #I  #W \
+#[fg=#dd7400,bg=#171717]"
+
+setw -g window-status-separator ""
+
+# ----------------------------
+# Pane Borders
+# ----------------------------
+set -g pane-border-style "fg=#262626"
+set -g pane-active-border-style "fg=#f99c00"
+
+# Pane title bar (shows on top border)
+set -g pane-border-status top
+set -g pane-border-format " #{?pane_active,#[fg=#fcbb00],#[fg=#953d00]}#T "
+
+# Dim inactive panes, full brightness for active
+set -g window-style "fg=#a1a1a1"
+set -g window-active-style "fg=#fafafa"
+
+# ----------------------------
+# Messages & Prompts
+# ----------------------------
+set -g message-style "bg=#262626,fg=#ffd236"
+set -g message-command-style "bg=#262626,fg=#f99c00"
+
+# ----------------------------
+# Copy Mode / Selection
+# ----------------------------
+setw -g mode-style "bg=#404040,fg=#f99c00"
+
+# ----------------------------
+# Misc
+# ----------------------------
+set -g clock-mode-colour "#f99c00"
+set -g popup-border-style "fg=#404040"
+

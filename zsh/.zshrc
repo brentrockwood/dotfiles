@@ -57,6 +57,7 @@ alias j='z'
 alias ji='zi'
 alias f='thefuck'
 alias cls='clear'
+alias rst='reset'
 alias gss='git status'
 alias gco='git checkout'
 alias clc='claude --dangerously-skip-permissions --chrome'
@@ -69,7 +70,7 @@ fi
 
 # --- Make directory and immediately move to it -------------------- 
 
-mmdir() {
+mdm() {
   mkdir -p "$1"
   cd "$1"
 }
@@ -101,3 +102,12 @@ source <(fzf --zsh)
 # zoxide (directory jumping)
 eval "$(zoxide init zsh)"
 
+# zsh-autosuggestions + zsh-syntax-highlighting
+# Install: brew install zsh-autosuggestions zsh-syntax-highlighting
+# zsh-syntax-highlighting must be sourced last
+if brew_prefix=$(brew --prefix 2>/dev/null); then
+  [[ -f "$brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && \
+    source "$brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+  [[ -f "$brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
+    source "$brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
