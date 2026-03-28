@@ -30,7 +30,7 @@ Minimal, boring, modern dotfiles.
 ## Prerequisites
 
 ```sh
-brew install neovim tmux fzf zoxide ripgrep \
+brew install neovim tmux fzf zoxide ripgrep starship \
              zsh-autosuggestions zsh-syntax-highlighting
 ```
 

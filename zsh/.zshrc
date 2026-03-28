@@ -55,12 +55,10 @@ alias vi='nvim'
 alias cd='z'
 alias j='z'
 alias ji='zi'
-alias f='thefuck'
 alias cls='clear'
 alias rst='reset'
 alias gss='git status'
 alias gco='git checkout'
-alias clc='claude --dangerously-skip-permissions --chrome'
 
 # --- Local, machine-specific overrides ----------------------------
 
@@ -81,18 +79,7 @@ if command -v starship >/dev/null 2>&1; then
   eval "$(starship init zsh)"
 fi
 
-# opencode
-
-export PATH=$HOME/.opencode/bin:$HOME/bin:$HOME/.local/bin:$PATH
-#
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=($HOME/.docker/completions $fpath)
-
-# Ruby
-
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
+export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 
 # --- Optional tools (add one at a time) ----------------------------
 
