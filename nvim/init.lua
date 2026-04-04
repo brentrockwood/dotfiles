@@ -59,12 +59,42 @@ local function system_appearance()
 end
 
 local function apply_solarized()
-  vim.o.background = system_appearance()
+  local bg = system_appearance()
+  vim.o.background = bg
   vim.cmd("colorscheme solarized")
+  
+  -- Swap status bar and line numbers to use opposite theme's body colors
+  if bg == "dark" then
+    -- Dark theme: use light theme body colors for status/line numbers
+    vim.api.nvim_set_hl(0, "StatusLine", { fg = "#657b83", bg = "#fdf6e3" })
+--    vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "#586e75", bg = "#fdf6e3" })
+    vim.api.nvim_set_hl(0, "LineNr", { fg = "#657b83", bg = "#073642" })
+    vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#839496", bg = "none" })
+    vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#073642" })
+    vim.api.nvim_set_hl(0, "CursorLine", { bg = "#073642" })
+  else
+    -- Light theme: use dark theme body colors for status/line numbers
+    vim.api.nvim_set_hl(0, "StatusLine", { fg = "#eee8d5", bg = "#002b36" })
+    vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "#93a1a1", bg = "#073642" })
+    vim.api.nvim_set_hl(0, "LineNr", { fg = "#839496", bg = "#073642" })
+    vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#657b83", bg = "#93a1a1" })
+    vim.api.nvim_set_hl(0, "CursorLine", { bg = "#eee8d5" })
+    vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#eee8d5" })
+  end
+  
+  vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+  vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
 end
 
 -- ── Plugins ───────────────────────────────────────────────────────────────────
 require("lazy").setup({
+
+  -- ActivityWatch: local watcher plugin for Vim/Neovim edits
+  {
+    dir = "/Users/br/src/dotfiles/nvim/pack/activitywatch/start/aw-watcher-vim",
+    name = "aw-watcher-vim",
+    lazy = false,
+  },
 
   -- Colorscheme: Solarized (tracks system dark/light)
   {
@@ -166,7 +196,7 @@ vim.api.nvim_create_autocmd("FocusGained", {
 })
 
 -- ── Scratchpad ────────────────────────────────────────────────────────────────
-local scratchpad_path = vim.fn.expand("~/.scratchpad.md")
+local scratchpad_path = vim.fn.expand("~/tmp/scratch.md")
 
 vim.keymap.set("n", "<leader>sc", function()
   vim.cmd("edit " .. scratchpad_path)
