@@ -99,10 +99,3 @@ if brew_prefix=$(brew --prefix 2>/dev/null); then
     source "$brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 fi
 
-# OpenClaw Completion
-source "/Users/br/.openclaw/completions/openclaw.zsh"
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/br/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
-# End of Docker CLI completions
