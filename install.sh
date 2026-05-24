@@ -21,6 +21,8 @@ echo
 
 mkdir -p "$HOME/.config/nvim"
 mkdir -p "$HOME/.config/tmux"
+mkdir -p "$HOME/.claude"
+mkdir -p "$HOME/bin"
 
 link "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
 link "$DOTFILES_DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua"
@@ -29,6 +31,8 @@ link "$DOTFILES_DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
 link "$DOTFILES_DIR/tmux/theme.sh" "$HOME/.config/tmux/theme.sh"
 link "$DOTFILES_DIR/tmux/solarized-dark.conf" "$HOME/.config/tmux/solarized-dark.conf"
 link "$DOTFILES_DIR/tmux/solarized-light.conf" "$HOME/.config/tmux/solarized-light.conf"
+link "$DOTFILES_DIR/bin/claude-statusline.sh" "$HOME/bin/claude-statusline.sh"
+link "$DOTFILES_DIR/bin/claude-statusline.sh" "$HOME/.claude/statusline-command.sh"
 
 echo
 echo "✔ Dotfiles installed."

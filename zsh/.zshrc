@@ -59,6 +59,8 @@ alias cls='clear'
 alias rst='reset'
 alias gss='git status'
 alias gco='git checkout'
+alias sp='nvim +$ ~/tmp/scratch.md'
+alias td='nvim +$ ~/tmp/todo.md'
 
 # --- Local, machine-specific overrides ----------------------------
 
@@ -82,13 +84,6 @@ fi
 export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 
 # --- Optional tools (add one at a time) ----------------------------
-
-# fzf (history, completion)
-source <(fzf --zsh)
-
-# zoxide (directory jumping)
-eval "$(zoxide init zsh)"
-
 # zsh-autosuggestions + zsh-syntax-highlighting
 # Install: brew install zsh-autosuggestions zsh-syntax-highlighting
 # zsh-syntax-highlighting must be sourced last
@@ -98,4 +93,98 @@ if brew_prefix=$(brew --prefix 2>/dev/null); then
   [[ -f "$brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
     source "$brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 fi
+
+# --- Supply-chain wrappers ----------------------------------------
+# npm-safe: checks each package's latest-version publish age before installing.
+# Blocks anything published less than 5 days ago.
+npm-safe() {
+  local blocked=0
+  for pkg in "$@"; do
+    [[ "$pkg" == -* ]] && continue
+    local info version published age
+    info=$(npm view "$pkg" version time --json 2>/dev/null) || {
+      echo "supply-chain: WARNING could not check $pkg, proceeding"
+      continue
+    }
+    version=$(echo "$info" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('version',''))" 2>/dev/null)
+    published=$(echo "$info" | python3 -c "
+import json, sys
+d = json.load(sys.stdin)
+v = d.get('version', '')
+print(d.get('time', {}).get(v, ''))
+" 2>/dev/null)
+    if [[ -z "$published" || -z "$version" ]]; then
+      echo "supply-chain: WARNING could not check age of $pkg, proceeding"
+      continue
+    fi
+    age=$(python3 -c "
+from datetime import datetime, timezone
+pub = datetime.fromisoformat('$published'.replace('Z', '+00:00'))
+print((datetime.now(timezone.utc) - pub).days)
+" 2>/dev/null)
+    if (( age < 5 )); then
+      echo "supply-chain: BLOCKED $pkg@$version — published ${age}d ago (min 5)"
+      blocked=1
+    else
+      echo "supply-chain: OK $pkg@$version — ${age}d old"
+    fi
+  done
+  (( blocked )) && return 1
+  npm install "$@"
+}
+
+# pip-safe: checks each package's latest-version publish age on PyPI before installing.
+# Blocks anything published less than 5 days ago.
+pip-safe() {
+  local blocked=0
+  for pkg in "$@"; do
+    [[ "$pkg" == -* ]] && continue
+    local name="${pkg%%[>=<!~^]*}"
+    local age
+    age=$(python3 - "$name" <<'PYEOF' 2>/dev/null
+import urllib.request, json, sys
+from datetime import datetime, timezone
+name = sys.argv[1]
+try:
+    data = json.load(urllib.request.urlopen(f'https://pypi.org/pypi/{name}/json'))
+    latest = data['info']['version']
+    files = data['releases'].get(latest, [])
+    if not files:
+        print(-1)
+    else:
+        t = min(f['upload_time_iso_8601'] for f in files)
+        pub = datetime.fromisoformat(t.replace('Z', '+00:00'))
+        print((datetime.now(timezone.utc) - pub).days)
+except Exception:
+    print(-1)
+PYEOF
+)
+    if [[ "$age" == "-1" || -z "$age" ]]; then
+      echo "supply-chain: WARNING could not check age of $name, proceeding"
+      continue
+    fi
+    if (( age < 5 )); then
+      echo "supply-chain: BLOCKED $name — latest version published ${age}d ago (min 5)"
+      blocked=1
+    else
+      echo "supply-chain: OK $name — ${age}d old"
+    fi
+  done
+  (( blocked )) && return 1
+  pip install "$@"
+}
+
+# --- Always keep this at the bottom ---
+
+# fzf (history, completion)
+source <(fzf --zsh)
+
+# zoxide (directory jumping)
+eval "$(zoxide init zsh)"
+
+
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/br/.lmstudio/bin"
+# End of LM Studio CLI section
 

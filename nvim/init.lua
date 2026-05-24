@@ -198,8 +198,9 @@ vim.api.nvim_create_autocmd("FocusGained", {
 -- ── Scratchpad ────────────────────────────────────────────────────────────────
 local scratchpad_path = vim.fn.expand("~/tmp/scratch.md")
 
-vim.keymap.set("n", "<leader>sc", function()
+vim.keymap.set("n", "<leader>sp", function()
   vim.cmd("edit " .. scratchpad_path)
+  vim.cmd("normal! G")
 end, { desc = "Open scratchpad" })
 
 local scratchpad_augroup = vim.api.nvim_create_augroup("Scratchpad", { clear = true })
@@ -213,3 +214,28 @@ vim.api.nvim_create_autocmd("BufLeave", {
   pattern = scratchpad_path,
   callback = apply_solarized,
 })
+
+-- ── Todo ────────────────────────────────────────────────────────────────
+local todo_path = vim.fn.expand("~/tmp/todo.md")
+
+vim.keymap.set("n", "<leader>do", function()
+  vim.cmd("edit " .. todo_path)
+  vim.cmd("normal! G")
+end, { desc = "Open todo" })
+
+local todo_augroup = vim.api.nvim_create_augroup("Todo", { clear = true })
+vim.api.nvim_create_autocmd("BufEnter", {
+  group = todo_augroup,
+  pattern = todo_path,
+  callback = function() vim.cmd("colorscheme darkblue") end,
+})
+vim.api.nvim_create_autocmd("BufLeave", {
+  group = todo_augroup,
+  pattern = todo_path,
+  callback = apply_solarized,
+})
+
+-- Insert DateTime
+vim.keymap.set('i', '<F5>', '<C-R>=strftime("%Y-%m-%dT%H-%M-%S%z")<CR>')
+vim.keymap.set('n', '<F5>', 'a<C-R>=strftime("%Y-%m-%dT%H-%M-%S%z")<CR><Esc>')
+
