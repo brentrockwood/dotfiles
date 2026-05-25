@@ -31,6 +31,12 @@ HISTFILE="$HOME/.zsh_history"
 bindkey -v
 export KEYTIMEOUT=1
 
+# Fix bracketed paste in vi mode: without this, the trailing ~ of the
+# \e[201~ end-sequence is interpreted as vi's toggle-case command,
+# capitalizing the last pasted character.
+autoload -Uz bracketed-paste-magic
+zle -N bracketed-paste bracketed-paste-magic
+
 # Cursor shape indicates mode (works in most modern terminals)
 function zle-keymap-select {
   case $KEYMAP in
