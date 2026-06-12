@@ -180,6 +180,10 @@ PYEOF
   pip install "$@"
 }
 
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/br/.lmstudio/bin"
+# End of LM Studio CLI section
+
 # --- Always keep this at the bottom ---
 
 # fzf (history, completion)
@@ -187,10 +191,4 @@ source <(fzf --zsh)
 
 # zoxide (directory jumping)
 eval "$(zoxide init zsh)"
-
-
-
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/br/.lmstudio/bin"
-# End of LM Studio CLI section
 

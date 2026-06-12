@@ -1,3 +1,9 @@
+-- Disable unused providers (suppress healthcheck noise)
+vim.g.loaded_perl_provider = 0
+
+-- Ruby provider: point at Homebrew gem install (not in PATH by default)
+vim.g.ruby_host_prog = vim.fn.expand("~/.gem/ruby/4.0.0/bin/neovim-ruby-host")
+
 -- Line numbers
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -89,13 +95,6 @@ end
 -- ── Plugins ───────────────────────────────────────────────────────────────────
 require("lazy").setup({
 
-  -- ActivityWatch: local watcher plugin for Vim/Neovim edits
-  {
-    dir = "/Users/br/src/dotfiles/nvim/pack/activitywatch/start/aw-watcher-vim",
-    name = "aw-watcher-vim",
-    lazy = false,
-  },
-
   -- Colorscheme: Solarized (tracks system dark/light)
   {
     "maxmx03/solarized.nvim",
@@ -171,7 +170,10 @@ require("lazy").setup({
   -- gitsigns: git diff in the sign column, stage/unstage hunks
   { "lewis6991/gitsigns.nvim", config = true },
 
-}, { change_detection = { notify = false } })
+}, {
+  change_detection = { notify = false },
+  rocks = { hererocks = false },
+})
 
 -- ── LSP keybindings (active only when LSP attaches to a buffer) ───────────────
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -218,7 +220,7 @@ vim.api.nvim_create_autocmd("BufLeave", {
 -- ── Todo ────────────────────────────────────────────────────────────────
 local todo_path = vim.fn.expand("~/tmp/todo.md")
 
-vim.keymap.set("n", "<leader>do", function()
+vim.keymap.set("n", "<leader>td", function()
   vim.cmd("edit " .. todo_path)
   vim.cmd("normal! G")
 end, { desc = "Open todo" })
@@ -238,4 +240,10 @@ vim.api.nvim_create_autocmd("BufLeave", {
 -- Insert DateTime
 vim.keymap.set('i', '<F5>', '<C-R>=strftime("%Y-%m-%dT%H-%M-%S%z")<CR>')
 vim.keymap.set('n', '<F5>', 'a<C-R>=strftime("%Y-%m-%dT%H-%M-%S%z")<CR><Esc>')
+
+-- Load machine-local config (not tracked in dotfiles)
+local local_cfg = vim.fn.stdpath("config") .. "/local.lua"
+if vim.uv.fs_stat(local_cfg) then
+  dofile(local_cfg)
+end
 
