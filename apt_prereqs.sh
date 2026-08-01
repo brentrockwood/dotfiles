@@ -13,7 +13,12 @@ sudo apt-get install -y \
     git \
     curl \
     build-essential \
-    jq
+    jq \
+    ripgrep \
+    rustc \
+    tree-sitter-cli \
+    unzip \
+    wget
 
 # starship: fall back to curl installer if apt version is absent (older Pi OS)
 if ! command -v starship &>/dev/null; then

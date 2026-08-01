@@ -29,12 +29,26 @@ Minimal, boring, modern dotfiles.
 
 ## Prerequisites
 
+macOS:
+
 ```sh
 brew install neovim tmux fzf zoxide ripgrep starship \
              zsh-autosuggestions zsh-syntax-highlighting
 ```
 
-`ripgrep` is required for Telescope's live grep (`<leader>fg`).
+Arch-based Linux:
+
+```sh
+./arch_prereqs.sh
+```
+
+Debian-based Linux:
+
+```sh
+./apt_prereqs.sh
+```
+
+`ripgrep` is required for Telescope's live grep (`<leader>fg`); `tree-sitter-cli` builds parser updates.
 
 ---
 
@@ -103,7 +117,8 @@ Language servers (TypeScript, Python, Go, Rust, Bash) install automatically via 
 
 | Key | Action |
 |-----|--------|
-| `<leader>sc` | Open scratchpad (`~/.scratchpad.md`) |
+| `<leader>sp` | Open scratchpad (`~/tmp/scratch.md`) |
+| `<leader>td` | Open todo (`~/tmp/todo.md`) |
 | `<leader>tw` | Toggle word wrap |
 | `jj` (insert mode) | Exit insert mode |
 

@@ -1,8 +1,6 @@
 -- Disable unused providers (suppress healthcheck noise)
 vim.g.loaded_perl_provider = 0
-
--- Ruby provider: point at Homebrew gem install (not in PATH by default)
-vim.g.ruby_host_prog = vim.fn.expand("~/.gem/ruby/4.0.0/bin/neovim-ruby-host")
+vim.g.loaded_ruby_provider = 0
 
 -- Line numbers
 vim.opt.number = true
@@ -119,7 +117,7 @@ require("lazy").setup({
   },
 
   -- Telescope: fuzzy finding for files, grep, buffers, diagnostics
-  -- Requires: brew install ripgrep  (for live_grep)
+  -- Requires ripgrep for live_grep.
   {
     "nvim-telescope/telescope.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
@@ -135,26 +133,19 @@ require("lazy").setup({
   -- Mason: GUI installer for language servers (open with :Mason)
   { "williamboman/mason.nvim", config = true },
 
-  -- mason-lspconfig: auto-installs and wires up language servers
+  -- mason-lspconfig: installs and enables language servers
   {
     "williamboman/mason-lspconfig.nvim",
     dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
-    config = function()
-      require("mason-lspconfig").setup({
-        ensure_installed = {
-          "ts_ls",         -- TypeScript / JavaScript
-          "pyright",       -- Python
-          "gopls",         -- Go
-          "rust_analyzer", -- Rust
-          "bashls",        -- Bash
-        },
-        handlers = {
-          function(server_name)
-            require("lspconfig")[server_name].setup({})
-          end,
-        },
-      })
-    end,
+    opts = {
+      ensure_installed = {
+        "ts_ls",         -- TypeScript / JavaScript
+        "pyright",       -- Python
+        "gopls",         -- Go
+        "rust_analyzer", -- Rust
+        "bashls",        -- Bash
+      },
+    },
   },
 
   -- blink.cmp: LSP-powered autocompletion (ships pre-compiled, no Rust needed)
@@ -172,6 +163,7 @@ require("lazy").setup({
 
 }, {
   change_detection = { notify = false },
+  lockfile = vim.fn.stdpath("state") .. "/lazy-lock.json",
   rocks = { hererocks = false },
 })
 
