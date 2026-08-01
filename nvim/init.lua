@@ -247,3 +247,7 @@ if vim.uv.fs_stat(local_cfg) then
   dofile(local_cfg)
 end
 
+-- Use Tab and Shift+Tab to cycle through buffers
+vim.keymap.set("n", "<Tab>", "<Cmd>bnext<CR>", { desc = "Next buffer" })
+vim.keymap.set("n", "<S-Tab>", "<Cmd>bprevious<CR>", { desc = "Previous buffer" })
+
