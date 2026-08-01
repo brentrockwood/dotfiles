@@ -87,7 +87,7 @@ if command -v starship >/dev/null 2>&1; then
   eval "$(starship init zsh)"
 fi
 
-export PATH=$HOME/bin:$HOME/.local/bin:$PATH
+export PATH=$HOME/bin:$HOME/.cargo/bin:$HOME/.local/bin:$PATH
 
 # --- Optional tools (add one at a time) ----------------------------
 # zsh-autosuggestions + zsh-syntax-highlighting
