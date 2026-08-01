@@ -243,3 +243,6 @@ end
 vim.keymap.set("n", "<Tab>", "<Cmd>bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "<S-Tab>", "<Cmd>bprevious<CR>", { desc = "Previous buffer" })
 
+-- Hide startup message
+vim.opt.shortmess:append("I")
+
