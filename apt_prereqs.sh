@@ -18,7 +18,9 @@ sudo apt-get install -y \
     rustc \
     tree-sitter-cli \
     unzip \
-    wget
+    wget \
+    wl-clipboard \
+    xclip
 
 # starship: fall back to curl installer if apt version is absent (older Pi OS)
 if ! command -v starship &>/dev/null; then

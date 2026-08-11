@@ -68,6 +68,13 @@ alias gco='git checkout'
 alias sp='nvim +$ ~/tmp/scratch.md'
 alias td='nvim +$ ~/tmp/todo.md'
 
+# --- SSH agent ----------------------------------------------------
+
+# Arch's systemd user agent keeps identities until this login session ends.
+if [[ -n "$XDG_RUNTIME_DIR" && -S "$XDG_RUNTIME_DIR/ssh-agent.socket" ]]; then
+  export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+fi
+
 # --- Local, machine-specific overrides ----------------------------
 
 if [[ -f "$HOME/.zshrc.local" ]]; then

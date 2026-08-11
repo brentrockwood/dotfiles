@@ -12,6 +12,13 @@ Minimal, boring, modern dotfiles.
 
 ---
 
+## Sway desktop
+
+- [Setup reference](SWAY.md) — installation, architecture, services, power policy, and diagnostics
+- [Sway cheatsheet](SWAY-CHEATSHEET.md) — daily keybindings and common workflows
+
+---
+
 ## What's included
 
 | Tool | Purpose |

@@ -3,7 +3,7 @@
 set -euo pipefail
 
 sudo pacman -Syu --needed \
-  base-devel curl fzf git jq neovim nodejs npm ripgrep rust starship tree-sitter-cli unzip wget zoxide
+  base-devel curl fzf git jq neovim nodejs npm ripgrep rust starship tree-sitter-cli unzip wget wl-clipboard xclip zoxide
 
 if ! command -v nvm >/dev/null; then
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/HEAD/install.sh | bash
