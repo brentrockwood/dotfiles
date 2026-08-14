@@ -19,6 +19,7 @@ link() {
 echo "Installing dotfiles from $DOTFILES_DIR"
 echo
 
+mkdir -p "$HOME/.config/ghostty"
 mkdir -p "$HOME/.config/mako"
 mkdir -p "$HOME/.config/nvim"
 mkdir -p "$HOME/.config/sway"
@@ -29,6 +30,7 @@ mkdir -p "$HOME/bin"
 
 link "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
 link "$DOTFILES_DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua"
+link "$DOTFILES_DIR/.config/ghostty/config" "$HOME/.config/ghostty/config"
 link "$DOTFILES_DIR/.config/starship.toml" "$HOME/.config/starship.toml"
 link "$DOTFILES_DIR/.config/mako/config" "$HOME/.config/mako/config"
 link "$DOTFILES_DIR/.config/sway/config" "$HOME/.config/sway/config"
@@ -36,6 +38,7 @@ link "$DOTFILES_DIR/.config/waybar/config.jsonc" "$HOME/.config/waybar/config.js
 link "$DOTFILES_DIR/.config/waybar/style.css" "$HOME/.config/waybar/style.css"
 link "$DOTFILES_DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
 link "$DOTFILES_DIR/tmux/theme.sh" "$HOME/.config/tmux/theme.sh"
+link "$DOTFILES_DIR/tmux/oled.conf" "$HOME/.config/tmux/oled.conf"
 link "$DOTFILES_DIR/tmux/solarized-dark.conf" "$HOME/.config/tmux/solarized-dark.conf"
 link "$DOTFILES_DIR/tmux/solarized-light.conf" "$HOME/.config/tmux/solarized-light.conf"
 link "$DOTFILES_DIR/bin/claude-statusline.sh" "$HOME/bin/claude-statusline.sh"

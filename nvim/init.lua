@@ -53,41 +53,18 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- ── System appearance detection ───────────────────────────────────────────────
-local function system_appearance()
-  if vim.fn.has("mac") == 1 then
-    local result = vim.fn.system("defaults read -g AppleInterfaceStyle 2>/dev/null")
-    return result:gsub("%s+", "") == "Dark" and "dark" or "light"
-  end
-  return "dark"  -- SSH / Linux console: always dark
-end
-
+-- ── OLED theme ────────────────────────────────────────────────────────────────
 local function apply_solarized()
-  local bg = system_appearance()
-  vim.o.background = bg
+  vim.o.background = "dark"
   vim.cmd("colorscheme solarized")
-  
-  -- Swap status bar and line numbers to use opposite theme's body colors
-  if bg == "dark" then
-    -- Dark theme: use light theme body colors for status/line numbers
-    vim.api.nvim_set_hl(0, "StatusLine", { fg = "#657b83", bg = "#fdf6e3" })
---    vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "#586e75", bg = "#fdf6e3" })
-    vim.api.nvim_set_hl(0, "LineNr", { fg = "#657b83", bg = "#073642" })
-    vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#839496", bg = "none" })
-    vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#073642" })
-    vim.api.nvim_set_hl(0, "CursorLine", { bg = "#073642" })
-  else
-    -- Light theme: use dark theme body colors for status/line numbers
-    vim.api.nvim_set_hl(0, "StatusLine", { fg = "#eee8d5", bg = "#002b36" })
-    vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "#93a1a1", bg = "#073642" })
-    vim.api.nvim_set_hl(0, "LineNr", { fg = "#839496", bg = "#073642" })
-    vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#657b83", bg = "#93a1a1" })
-    vim.api.nvim_set_hl(0, "CursorLine", { bg = "#eee8d5" })
-    vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#eee8d5" })
+  for _, group in ipairs({ "Normal", "NormalNC", "NormalFloat", "SignColumn", "EndOfBuffer", "LineNr" }) do
+    vim.api.nvim_set_hl(0, group, { bg = "#000000" })
   end
-  
-  vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-  vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+  vim.api.nvim_set_hl(0, "StatusLine", { fg = "#839496", bg = "#000000" })
+  vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "#586e75", bg = "#000000" })
+  vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#b58900", bg = "#000000" })
+  vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#000000" })
+  vim.api.nvim_set_hl(0, "CursorLine", { bg = "#000000" })
 end
 
 -- ── Plugins ───────────────────────────────────────────────────────────────────
@@ -201,7 +178,7 @@ local scratchpad_augroup = vim.api.nvim_create_augroup("Scratchpad", { clear = t
 vim.api.nvim_create_autocmd("BufEnter", {
   group = scratchpad_augroup,
   pattern = scratchpad_path,
-  callback = function() vim.cmd("colorscheme darkblue") end,
+  callback = apply_solarized,
 })
 vim.api.nvim_create_autocmd("BufLeave", {
   group = scratchpad_augroup,
@@ -221,7 +198,7 @@ local todo_augroup = vim.api.nvim_create_augroup("Todo", { clear = true })
 vim.api.nvim_create_autocmd("BufEnter", {
   group = todo_augroup,
   pattern = todo_path,
-  callback = function() vim.cmd("colorscheme darkblue") end,
+  callback = apply_solarized,
 })
 vim.api.nvim_create_autocmd("BufLeave", {
   group = todo_augroup,

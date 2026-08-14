@@ -26,7 +26,7 @@ Minimal, boring, modern dotfiles.
 | zsh | Shell with vi-mode, history, minimal aliases |
 | starship | Prompt (git-aware, fast) |
 | nvim | Editor with LSP, Treesitter, Telescope |
-| tmux | Terminal multiplexer with Solarized theme |
+| ghostty | Terminal with a black OLED background |\n| tmux | Terminal multiplexer with a black OLED theme |
 | zoxide | Smarter `cd` (replaces it via `alias cd='z'`) |
 | fzf | Fuzzy history search (`Ctrl-R`) and file picker (`Ctrl-T`) |
 | zsh-autosuggestions | Fish-style history completions (press `→` to accept) |
@@ -135,22 +135,11 @@ Language servers (TypeScript, Python, Go, Rust, Bash) install automatically via 
 
 ### How it works
 
-Both tmux and Neovim follow the macOS system appearance setting automatically:
-
-- **macOS dark mode** → Solarized Dark
-- **macOS light mode** → Solarized Light
-- **SSH / Linux** → Solarized Dark (fallback — `defaults` command not available)
-
-tmux re-checks appearance whenever it gains focus. Neovim re-checks on `FocusGained`.
+This experimental branch targets an OLED display. Ghostty, tmux, Neovim, Sway, Waybar, and Mako use black backgrounds. Neovim re-applies its theme on `FocusGained`.
 
 ### Changing the tmux theme
 
-Theme files are `tmux/solarized-dark.conf` and `tmux/solarized-light.conf`.
-Edit the hex values in either file, then reload with `prefix + r`.
-
-To use a completely different theme, create `tmux/mytheme.conf` following the same
-structure (`status-style`, `window-status-*`, `pane-border-*`, etc.), then edit
-`tmux/theme.sh` to source your file.
+The active tmux theme is `tmux/oled.conf`. Edit it, then reload with `prefix + r`.
 
 ### Changing the Neovim theme
 
@@ -158,7 +147,7 @@ The colorscheme plugin is `maxmx03/solarized.nvim` in `nvim/init.lua`. To switch
 
 1. Replace the plugin entry in `require("lazy").setup({...})` with your chosen plugin.
 2. Update `apply_solarized()` to call the new colorscheme name.
-3. Remove or adapt the `vim.o.background` line if the new theme doesn't use it.
+3. Keep or adapt the black-background highlight overrides in `apply_solarized()`.
 
 Run `:Lazy` inside Neovim to manage plugins interactively.
 

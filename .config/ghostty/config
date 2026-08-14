@@ -1,0 +1,10 @@
+font-family = Menlo
+window-padding-x = 10
+theme = iTerm2 Solarized Dark
+background = #000000
+window-theme = dark
+macos-secure-input-indication = false
+custom-shader = /home/br/.config/ghostty/shaders/cursor_warp.glsl
+custom-shader = /home/br/.config/ghostty/shaders/sonic_boom_cursor.glsl
+custom-shader-animation = always
+keybind = media_track_previous=text:\x03cd -\r

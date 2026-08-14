@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sway cheatsheet</title>
+<style>
+  :root { color-scheme: dark; font: 16px/1.5 system-ui, sans-serif; background: #000; color: #d8dee9; }
+  body { margin: 0; }
+  main { box-sizing: border-box; max-width: 1100px; margin: auto; padding: 2rem 3rem 4rem; }
+  h1, h2, h3 { color: #e5e9f0; line-height: 1.2; }
+  h1 { border-bottom: 1px solid #006600; padding-bottom: .5rem; }
+  h2 { margin-top: 2.5rem; }
+  code, pre { font-family: "MesloLGLDZ Nerd Font Mono", monospace; background: #101216; }
+  code { padding: .1rem .3rem; border-radius: .2rem; }
+  pre { overflow-x: auto; padding: 1rem; border-left: 3px solid #006600; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border-bottom: 1px solid #2a2f3a; padding: .45rem .65rem; text-align: left; vertical-align: top; }
+  th { color: #8bd5a0; }
+  li { margin: .35rem 0; }
+  #hint { color: #697386; position: fixed; right: 1rem; top: .75rem; }
+</style>
+</head>
+<body>
+<main><span id="hint">Esc closes</span><article id="content"></article></main>
+<script>
+const escape = text => text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+const inline = text => escape(text)
+  .replace(/`([^`]+)`/g, "<code>$1</code>")
+  .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+  .replace(/\[([^]]+)\]\(([^ )]+)\)/g, '<a href="$2">$1</a>');
+const cells = row => row.trim().replace(/^\||\|$/g, "").split("|").map(cell => inline(cell.trim()));
+
+fetch("SWAY-CHEATSHEET.md").then(response => response.text()).then(markdown => {
+  const lines = markdown.split("\n"), output = [];
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (/^```/.test(line)) {
+      const block = []; while (++i < lines.length && !/^```/.test(lines[i])) block.push(lines[i]);
+      output.push(`<pre>${escape(block.join("\n"))}</pre>`);
+    } else if (/^\|/.test(line) && /^\|?\s*:?-+/.test(lines[i + 1] || "")) {
+      const headers = cells(line), rows = []; i++;
+      while (/^\|/.test(lines[i + 1] || "")) rows.push(cells(lines[++i]));
+      output.push(`<table><thead><tr>${headers.map(cell => `<th>${cell}</th>`).join("")}</tr></thead><tbody>${rows.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join("")}</tr>`).join("")}</tbody></table>`);
+    } else if (/^(#{1,3})\s/.test(line)) {
+      const [, marks, text] = line.match(/^(#{1,3})\s+(.*)$/); output.push(`<h${marks.length}>${inline(text)}</h${marks.length}>`);
+    } else if (/^- /.test(line)) {
+      const items = [line.slice(2)]; while (/^- /.test(lines[i + 1] || "")) items.push(lines[++i].slice(2));
+      output.push(`<ul>${items.map(item => `<li>${inline(item)}</li>`).join("")}</ul>`);
+    } else if (/^\d+\. /.test(line)) {
+      const items = [line.replace(/^\d+\. /, "")]; while (/^\d+\. /.test(lines[i + 1] || "")) items.push(lines[++i].replace(/^\d+\. /, ""));
+      output.push(`<ol>${items.map(item => `<li>${inline(item)}</li>`).join("")}</ol>`);
+    } else if (line.trim()) output.push(`<p>${inline(line)}</p>`);
+  }
+  document.querySelector("#content").innerHTML = output.join("\n");
+});
+</script>
+</body>
+</html>

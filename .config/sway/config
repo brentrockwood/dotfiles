@@ -8,7 +8,7 @@ set $term ghostty
 set $menu wofi --show drun
 
 # Keep the first pass quiet and OLED-friendly.
-output * bg #101216 solid_color
+output * bg #000000 solid_color
 
 input type:touchpad {
     tap enabled
@@ -22,6 +22,9 @@ seat seat0 hide_cursor when-typing enable
 # Applications
 bindsym $mod+Return exec $term
 bindsym $mod+d exec $menu
+bindsym $mod+Shift+slash exec sh -c 'chromium --user-data-dir=/tmp/sway-cheatsheet-chromium --allow-file-access-from-files --app="file://$HOME/src/dotfiles/SWAY-CHEATSHEET.html"'
+bindsym Escape [title="Sway cheatsheet"] kill
+for_window [title="Sway cheatsheet"] floating enable, resize set 1000 px 800 px, move position center
 bindsym $mod+Shift+Escape exec sh -c 'swaylock -f -c 000000 && swaymsg "output * power off"'
 bindsym $mod+Shift+q kill
 bindsym $mod+Shift+c reload
@@ -68,6 +71,9 @@ bindsym $mod+Shift+9 move container to workspace number 9
 bindsym $mod+Shift+0 move container to workspace number 10
 
 # Layout
+# Keep window chrome off the OLED; pixel borders still show focus.
+default_border pixel 1
+client.focused #006600 #000000 #d8dee9 #006600 #006600
 floating_modifier $mod normal
 bindsym $mod+b splith
 bindsym $mod+v splitv
@@ -120,7 +126,7 @@ exec_always --no-startup-id sh -c 'pkill -x blueman-applet; exec blueman-applet'
 
 # Notifications and idle locking. Any input wakes a powered-off output to Swaylock.
 exec_always --no-startup-id sh -c 'pkill -x mako; exec mako'
-exec_always --no-startup-id sh -c 'pkill -x swayidle; exec swayidle -w timeout 1 "true" resume "swaymsg output \\* power on" timeout 300 "swaylock -f -c 000000; swaymsg output \\* power off" resume "swaymsg output \\* power on" before-sleep "swaylock -f -c 000000"'
+exec_always --no-startup-id sh -c 'pkill -x swayidle; exec swayidle -w timeout 1 "true" resume "swaymsg output \\* power on" timeout 600 "swaylock -f -c 000000; swaymsg output \\* power off" resume "swaymsg output \\* power on" before-sleep "swaylock -f -c 000000"'
 
 # Restart Waybar on Sway reload so visual changes are immediately visible.
 exec_always --no-startup-id sh -c 'pkill -x waybar; exec waybar'

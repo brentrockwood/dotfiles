@@ -4,7 +4,7 @@
 }
 
 window#waybar {
-  background: #101216;
+  background: #000000;
   color: #d8dee9;
   border-bottom: 1px solid #2a2f3a;
 }
@@ -19,7 +19,7 @@ window#waybar {
 }
 
 #workspaces button:hover,
-#workspaces button.active {
+#workspaces button.focused {
   color: #e5e9f0;
   background: #1c212b;
 }

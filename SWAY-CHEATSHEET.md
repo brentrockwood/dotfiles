@@ -11,6 +11,7 @@ This is the quick reference for this dotfiles configuration. `Super` means the W
 | `Super+H/J/K/L` | Focus left/down/up/right |
 | `Super+1` … `Super+0` | Switch to workspace 1 … 10 |
 | `Super+Shift+Escape` | Lock immediately and turn off the OLED |
+| `Super+?` | Open this cheatsheet; `Escape` closes it |
 
 After locking, press any key or move the touchpad to wake the display; the screen remains locked until you enter your password.
 
