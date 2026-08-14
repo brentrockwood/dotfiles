@@ -26,7 +26,8 @@ Minimal, boring, modern dotfiles.
 | zsh | Shell with vi-mode, history, minimal aliases |
 | starship | Prompt (git-aware, fast) |
 | nvim | Editor with LSP, Treesitter, Telescope |
-| ghostty | Terminal with a black OLED background |\n| tmux | Terminal multiplexer with a black OLED theme |
+| ghostty | Terminal emulator |
+| tmux | Terminal multiplexer |
 | zoxide | Smarter `cd` (replaces it via `alias cd='z'`) |
 | fzf | Fuzzy history search (`Ctrl-R`) and file picker (`Ctrl-T`) |
 | zsh-autosuggestions | Fish-style history completions (press `→` to accept) |
@@ -133,23 +134,17 @@ Language servers (TypeScript, Python, Go, Rust, Bash) install automatically via 
 
 ## Themes
 
-### How it works
+Profiles in `themes/` change colors only; Sway bindings, services, and layouts stay static. The selector updates Sway, Waybar, Mako, Ghostty, tmux, and Neovim, and sets GTK's dark/light preference (which the local XDG portal exposes to supporting apps).
 
-This experimental branch targets an OLED display. Ghostty, tmux, Neovim, Sway, Waybar, and Mako use black backgrounds. Neovim re-applies its theme on `FocusGained`.
+```sh
+theme oled-black
+theme solarized-dark
+theme solarized-light
+```
 
-### Changing the tmux theme
+`oled-black` is the default. Ghostty needs its normal reload shortcut (`Ctrl+Shift+,`) after a switch; Neovim applies the selected profile when it gains focus.
 
-The active tmux theme is `tmux/oled.conf`. Edit it, then reload with `prefix + r`.
-
-### Changing the Neovim theme
-
-The colorscheme plugin is `maxmx03/solarized.nvim` in `nvim/init.lua`. To switch:
-
-1. Replace the plugin entry in `require("lazy").setup({...})` with your chosen plugin.
-2. Update `apply_solarized()` to call the new colorscheme name.
-3. Keep or adapt the black-background highlight overrides in `apply_solarized()`.
-
-Run `:Lazy` inside Neovim to manage plugins interactively.
+To add a profile, copy an existing directory under `themes/`, then provide `appearance`, `sway.conf`, `waybar.css`, `mako.conf`, `ghostty.conf`, `tmux.conf`, and `nvim.lua`.
 
 ---
 

@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+root="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/.." && pwd)"
+theme="${1:-}"
+dir="$root/themes/$theme"
+
+if [[ ! -d $dir ]]; then
+  printf 'Usage: %s <%s>\n' "${0##*/}" "$(printf '%s ' "$root"/themes/* | xargs -n1 basename | xargs)" >&2
+  exit 2
+fi
+
+runtime="$HOME/.config/dotfiles-theme"
+mkdir -p "$runtime" "$HOME/.config/waybar" "$HOME/.config/mako" "$HOME/.config/ghostty"
+ln -sfn "$dir" "$runtime/current"
+ln -sfn "$runtime/current/waybar.css" "$HOME/.config/waybar/style.css"
+ln -sfn "$runtime/current/mako.conf" "$HOME/.config/mako/config"
+ln -sfn "$runtime/current/ghostty.conf" "$HOME/.config/ghostty/theme.conf"
+
+appearance=$(<"$dir/appearance")
+if command -v gsettings >/dev/null && gsettings writable org.gnome.desktop.interface color-scheme >/dev/null; then
+  gsettings set org.gnome.desktop.interface color-scheme "prefer-$appearance"
+fi
+
+swaymsg reload >/dev/null 2>&1 || true
+tmux has-session 2>/dev/null && tmux source-file "$HOME/.tmux.conf"
+printf 'Activated %s (%s). Reload Ghostty with Ctrl+Shift+,.\n' "$theme" "$appearance"

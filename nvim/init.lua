@@ -53,18 +53,16 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- ── OLED theme ────────────────────────────────────────────────────────────────
+-- ── Theme profile ──────────────────────────────────────────────────────────────
 local function apply_solarized()
-  vim.o.background = "dark"
+  local theme = { background = "dark" }
+  local path = vim.fn.expand("~/.config/dotfiles-theme/current/nvim.lua")
+  if vim.uv.fs_stat(path) then theme = dofile(path) end
+  vim.o.background = theme.background
   vim.cmd("colorscheme solarized")
-  for _, group in ipairs({ "Normal", "NormalNC", "NormalFloat", "SignColumn", "EndOfBuffer", "LineNr" }) do
-    vim.api.nvim_set_hl(0, group, { bg = "#000000" })
+  for group, colors in pairs(theme.highlights or {}) do
+    vim.api.nvim_set_hl(0, group, colors)
   end
-  vim.api.nvim_set_hl(0, "StatusLine", { fg = "#839496", bg = "#000000" })
-  vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "#586e75", bg = "#000000" })
-  vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#b58900", bg = "#000000" })
-  vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#000000" })
-  vim.api.nvim_set_hl(0, "CursorLine", { bg = "#000000" })
 end
 
 -- ── Plugins ───────────────────────────────────────────────────────────────────
