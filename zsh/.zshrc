@@ -197,6 +197,14 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# Keys
+
+if [ -d ~/.config/keys ]; then
+    for file in ~/.config/keys/*(..); do
+        source "$file"
+    done
+fi
+
 # --- Always keep this at the bottom ---
 
 # fzf (history, completion)
