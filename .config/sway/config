@@ -23,7 +23,6 @@ seat seat0 hide_cursor when-typing enable
 bindsym $mod+Return exec $term
 bindsym $mod+d exec $menu
 bindsym $mod+Shift+slash exec sh -c 'chromium --user-data-dir=/tmp/sway-cheatsheet-chromium --allow-file-access-from-files --app="file://$HOME/src/dotfiles/SWAY-CHEATSHEET.html"'
-bindsym Escape [title="Sway cheatsheet"] kill
 for_window [title="Sway cheatsheet"] floating enable, resize set 1000 px 800 px, move position center
 bindsym $mod+Shift+Escape exec sh -c 'swaylock -f -c 000000 && swaymsg "output * power off"'
 bindsym $mod+Shift+q kill

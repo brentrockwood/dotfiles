@@ -24,6 +24,10 @@
 <body>
 <main><span id="hint">Esc closes</span><article id="content"></article></main>
 <script>
+addEventListener("keydown", event => {
+  if (event.key === "Escape") window.close();
+});
+
 const escape = text => text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 const inline = text => escape(text)
   .replace(/`([^`]+)`/g, "<code>$1</code>")
