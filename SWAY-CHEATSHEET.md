@@ -7,10 +7,10 @@ This is the quick reference for this dotfiles configuration. `Super` means the W
 | Key | What it does |
 | --- | --- |
 | `Super+Enter` | Open Ghostty |
-| `Super+D` | Open Wofi application launcher; type to search, `Enter` to launch |
+| `Super+D` / `Super+Space` | Open Wofi application launcher; type to search, `Enter` to launch |
 | `Super+H/J/K/L` | Focus left/down/up/right |
 | `Super+1` … `Super+0` | Switch to workspace 1 … 10 |
-| `Super+Shift+Escape` | Lock immediately and turn off the OLED |
+| `Super+Shift+S` | Lock immediately and turn off the OLED |
 | `Super+?` | Open this cheatsheet; `Escape` closes it |
 
 After locking, press any key or move the touchpad to wake the display; the screen remains locked until you enter your password.
@@ -33,7 +33,7 @@ Moving the mouse does **not** change focus. This is deliberate.
 | `Super+1` … `Super+0` | Go to workspace 1 … 10 (`0` is 10) |
 | `Super+Shift+1` … `Super+Shift+0` | Send focused window to workspace 1 … 10 |
 
-A workspace exists when it has a window. The Waybar buttons show active workspaces; click one if you prefer the mouse.
+A workspace exists when it has a window. The Waybar buttons show active workspaces; click one if you prefer the mouse. A four-finger touchpad swipe left/right switches to the next/previous workspace.
 
 ### Layouts
 
@@ -46,7 +46,6 @@ A workspace exists when it has a window. The Waybar buttons show active workspac
 | `Super+W` | Tabbed layout |
 | `Super+F` | Fullscreen focused window |
 | `Super+Shift+Space` | Toggle focused window floating/tiling |
-| `Super+Space` | Toggle focus between tiled and floating windows |
 | `Super+A` | Focus the parent container |
 
 ### Resize
@@ -62,7 +61,7 @@ A workspace exists when it has a window. The Waybar buttons show active workspac
 | `Super+Shift+C` | Reload Sway and restart Waybar/helpers |
 | `Super+Shift+Q` | Close focused window |
 | `Super+Shift+E` | Log out of Sway after confirmation |
-| `Super+Shift+Escape` | Lock and power off display |
+| `Super+Shift+S` | Lock and power off display |
 | `Print` | Select and save a screenshot |
 | OmniBook screenshot/F11 key | Same screenshot action (`XF86Launch2`) |
 

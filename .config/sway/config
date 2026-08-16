@@ -22,9 +22,10 @@ seat seat0 hide_cursor when-typing enable
 # Applications
 bindsym $mod+Return exec $term
 bindsym $mod+d exec $menu
+bindsym $mod+space exec $menu
 bindsym $mod+Shift+slash exec sh -c 'chromium --user-data-dir=/tmp/sway-cheatsheet-chromium --allow-file-access-from-files --app="file://$HOME/src/dotfiles/SWAY-CHEATSHEET.html"'
 for_window [title="Sway cheatsheet"] floating enable, resize set 1000 px 800 px, move position center
-bindsym $mod+Shift+Escape exec sh -c 'swaylock -f -c 000000 && swaymsg "output * power off"'
+bindsym $mod+Shift+s exec sh -c 'swaylock -f -c 000000 && swaymsg "output * power off"'
 bindsym $mod+Shift+q kill
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit Sway?' -B 'Yes, exit' 'swaymsg exit'
@@ -68,6 +69,8 @@ bindsym $mod+Shift+7 move container to workspace number 7
 bindsym $mod+Shift+8 move container to workspace number 8
 bindsym $mod+Shift+9 move container to workspace number 9
 bindsym $mod+Shift+0 move container to workspace number 10
+bindgesture swipe:4:left workspace next
+bindgesture swipe:4:right workspace prev
 
 # Layout
 # Keep window chrome off the OLED; pixel borders still show focus.
@@ -80,7 +83,6 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 bindsym $mod+f fullscreen
 bindsym $mod+Shift+space floating toggle
-bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
 mode "resize" {

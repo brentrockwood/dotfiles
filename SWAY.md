@@ -75,7 +75,7 @@ The general CLI prerequisite scripts also install `wl-clipboard` and `xclip` so 
 
 ### Locking and idle policy
 
-`Super+Shift+Escape` locks with a black Swaylock screen, then powers off the outputs. Any input wakes the OLED back to the still-locked screen.
+`Super+Shift+S` locks with a black Swaylock screen, then powers off the outputs. Any input wakes the OLED back to the still-locked screen.
 
 `swayidle` also:
 
