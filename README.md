@@ -138,7 +138,7 @@ Language servers (TypeScript, Python, Go, Rust, Bash) install automatically via 
 
 ## Themes
 
-Profiles in `themes/` change colors only; Sway bindings, services, and layouts stay static. The selector updates Sway, Waybar, Mako, Ghostty, tmux, and Neovim, and sets GTK's dark/light preference (which the local XDG portal exposes to supporting apps).
+Profiles in `themes/` change colors only; Sway bindings, services, and layouts stay static. The selector updates Sway, Waybar, Wofi, Mako, Ghostty, tmux, and Neovim, and sets GTK's dark/light preference (which the local XDG portal exposes to supporting apps).
 
 ```sh
 theme oled-black
@@ -149,7 +149,7 @@ theme solarized-light
 
 `oled-black` is the default. `amber-crt` uses warm amber phosphor colors on a near-black background. Ghostty needs its normal reload shortcut (`Ctrl+Shift+,`) after a switch; Neovim applies the selected profile when it gains focus.
 
-To add a profile, copy an existing directory under `themes/`, then provide `appearance`, `sway.conf`, `waybar.css`, `mako.conf`, `ghostty.conf`, `tmux.conf`, and `nvim.lua`.
+To add a profile, copy an existing directory under `themes/`, then provide `appearance`, `sway.conf`, `waybar.css`, `wofi.css`, `mako.conf`, `ghostty.conf`, `tmux.conf`, and `nvim.lua`.
 
 ---
 

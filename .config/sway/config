@@ -123,9 +123,9 @@ exec_always --no-startup-id $HOME/bin/audio-route
 # PolicyKit authorizes changes from the graphical network and Bluetooth applets.
 exec_always --no-startup-id sh -c 'pgrep -f "[p]olkit-kde-authentication-agent-1" >/dev/null || exec /usr/lib/polkit-kde-authentication-agent-1'
 
-# Tray applets for graphical network and Bluetooth controls.
-exec_always --no-startup-id sh -c 'pkill -x nm-applet; exec nm-applet --indicator'
-exec_always --no-startup-id sh -c 'pkill -x blueman-applet; exec blueman-applet'
+# Waybar's native network and Bluetooth modules provide themed status icons.
+# Stop the tray applets so their unthemed duplicates are not shown.
+exec_always --no-startup-id sh -c 'pkill -x nm-applet || true; pkill -x blueman-applet || true'
 
 # Notifications and idle locking. Any input wakes a powered-off output to Swaylock.
 exec_always --no-startup-id sh -c 'pkill -x mako; exec mako'

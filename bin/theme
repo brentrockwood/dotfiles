@@ -11,11 +11,12 @@ if [[ -z $theme || ! -d $dir ]]; then
 fi
 
 runtime="$HOME/.config/dotfiles-theme"
-mkdir -p "$runtime" "$HOME/.config/waybar" "$HOME/.config/mako" "$HOME/.config/ghostty"
+mkdir -p "$runtime" "$HOME/.config/waybar" "$HOME/.config/mako" "$HOME/.config/ghostty" "$HOME/.config/wofi"
 ln -sfn "$dir" "$runtime/current"
 ln -sfn "$runtime/current/waybar.css" "$HOME/.config/waybar/style.css"
 ln -sfn "$runtime/current/mako.conf" "$HOME/.config/mako/config"
 ln -sfn "$runtime/current/ghostty.conf" "$HOME/.config/ghostty/theme.conf"
+ln -sfn "$runtime/current/wofi.css" "$HOME/.config/wofi/style.css"
 
 appearance=$(<"$dir/appearance")
 if command -v gsettings >/dev/null && gsettings writable org.gnome.desktop.interface color-scheme >/dev/null; then

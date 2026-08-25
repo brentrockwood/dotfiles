@@ -5,7 +5,7 @@
   "spacing": 8,
   "modules-left": ["sway/workspaces"],
   "modules-center": ["sway/window"],
-  "modules-right": ["pulseaudio", "group/power", "clock", "tray"],
+  "modules-right": ["pulseaudio", "network", "bluetooth", "group/power", "clock", "tray"],
 
   "sway/workspaces": {
     "disable-scroll": true,
@@ -23,6 +23,23 @@
     },
     "tooltip-format": "Volume: {volume}%",
     "on-click": "pavucontrol"
+  },
+  "network": {
+    "format-wifi": "󰖩",
+    "format-ethernet": "󰈀",
+    "format-disconnected": "󰖪",
+    "tooltip-format-wifi": "{essid}\n{ipaddr} • {signalStrength}%",
+    "tooltip-format-ethernet": "{ifname}\n{ipaddr}",
+    "tooltip-format-disconnected": "Disconnected",
+    "on-click": "nm-connection-editor"
+  },
+  "bluetooth": {
+    "format": "",
+    "format-disabled": "󰂲",
+    "format-connected": "",
+    "tooltip-format": "Bluetooth: {status}",
+    "tooltip-format-connected": "{device_alias}",
+    "on-click": "blueman-manager"
   },
   "group/power": {
     "orientation": "horizontal",

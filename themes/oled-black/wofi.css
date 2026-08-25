@@ -1,0 +1,38 @@
+* {
+  font-family: "MesloLGLDZ Nerd Font Mono", sans-serif;
+  font-size: 14px;
+}
+
+window {
+  margin: 0;
+  border: 1px solid #2a2f3a;
+  border-radius: 0;
+  background-color: #000000;
+  color: #d8dee9;
+}
+
+#input {
+  margin: 10px;
+  padding: 8px;
+  border: 1px solid #2a2f3a;
+  border-radius: 0;
+  background-color: #000000;
+  color: #e5e9f0;
+}
+
+#inner-box {
+  margin: 0 10px 10px;
+}
+
+#entry {
+  padding: 8px;
+  border-radius: 0;
+}
+
+#entry:selected {
+  background-color: #1c212b;
+}
+
+#text:selected {
+  color: #e5e9f0;
+}

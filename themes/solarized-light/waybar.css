@@ -33,6 +33,7 @@ window#waybar {
   color: #9aa5b5;
 }
 
+#network,
 #bluetooth,
 #pulseaudio,
 #battery,
@@ -43,6 +44,7 @@ window#waybar {
 }
 
 #pulseaudio.muted,
+#network.disconnected,
 #bluetooth.disabled {
   color: #697386;
 }
