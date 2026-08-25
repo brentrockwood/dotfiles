@@ -5,7 +5,7 @@ root="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/.." && pwd)"
 theme="${1:-}"
 dir="$root/themes/$theme"
 
-if [[ ! -d $dir ]]; then
+if [[ -z $theme || ! -d $dir ]]; then
   printf 'Usage: %s <%s>\n' "${0##*/}" "$(printf '%s ' "$root"/themes/* | xargs -n1 basename | xargs)" >&2
   exit 2
 fi

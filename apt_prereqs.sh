@@ -1,26 +1,36 @@
 #!/usr/bin/env bash
 # Installs standard CLI prerequisites on a Debian/Ubuntu/Raspberry Pi OS machine.
 # Safe to re-run. Does not touch ai1 or any machine with ROCm/GPU stacks.
-set -e
+set -euo pipefail
 
 echo "==> apt packages"
 sudo apt-get update -qq
 sudo apt-get install -y \
-    fzf \
-    starship \
-    neovim \
-    zoxide \
-    git \
-    curl \
     build-essential \
+    curl \
+    fzf \
+    git \
+    golang-go \
     jq \
+    neovim \
+    nodejs \
+    npm \
+    python3 \
+    python3-pip \
     ripgrep \
     rustc \
+    cargo \
+    starship \
     tree-sitter-cli \
+    tmux \
     unzip \
     wget \
     wl-clipboard \
-    xclip
+    xclip \
+    zoxide \
+    zsh \
+    zsh-autosuggestions \
+    zsh-syntax-highlighting
 
 # starship: fall back to curl installer if apt version is absent (older Pi OS)
 if ! command -v starship &>/dev/null; then
@@ -46,4 +56,4 @@ if ! command -v uv &>/dev/null; then
     curl -LsSf https://astral.sh/uv/install.sh | sh
 fi
 
-echo "==> Done. Restart your shell or: source ~/.bashrc"
+echo "==> Done. Restart your shell, then use: exec zsh"

@@ -22,7 +22,7 @@ Minimal, boring, modern dotfiles.
 ## What's included
 
 | Tool | Purpose |
-|------|---------|
+| ------ | --------- |
 | zsh | Shell with vi-mode, history, minimal aliases |
 | starship | Prompt (git-aware, fast) |
 | nvim | Editor with LSP, Treesitter, Telescope |
@@ -56,6 +56,10 @@ Debian-based Linux:
 ./apt_prereqs.sh
 ```
 
+Both scripts install the same interactive Zsh baseline: Zsh, tmux, fzf, zoxide, Starship, Neovim, ripgrep, Node/NVM, uv, Python/pip, Rust/Cargo, Go, and Zsh autosuggestions plus syntax highlighting.
+
+For the optional Sway desktop stack, use `./arch_desktop_prereqs.sh` or `./apt_desktop_prereqs.sh`. Debian does not generally package Ghostty, so install it separately there or change the terminal command in the Sway config.
+
 `ripgrep` is required for Telescope's live grep (`<leader>fg`); `tree-sitter-cli` builds parser updates.
 
 ---
@@ -88,7 +92,7 @@ Language servers (TypeScript, Python, Go, Rust, Bash) install automatically via 
 ### tmux (prefix = `Ctrl-b`)
 
 | Key | Action |
-|-----|--------|
+| ----- | -------- |
 | `prefix + \|` | Split pane vertically |
 | `prefix + -` | Split pane horizontally |
 | `prefix + h/j/k/l` | Navigate panes (vim-style) |
@@ -112,7 +116,7 @@ Language servers (TypeScript, Python, Go, Rust, Bash) install automatically via 
 **LSP** (active when a language server is attached)
 
 | Key | Action |
-|-----|--------|
+| ----- | -------- |
 | `gd` | Go to definition |
 | `gD` | Go to declaration |
 | `gr` | List references |
@@ -124,7 +128,7 @@ Language servers (TypeScript, Python, Go, Rust, Bash) install automatically via 
 **Other**
 
 | Key | Action |
-|-----|--------|
+| ----- | -------- |
 | `<leader>sp` | Open scratchpad (`~/tmp/scratch.md`) |
 | `<leader>td` | Open todo (`~/tmp/todo.md`) |
 | `<leader>tw` | Toggle word wrap |
@@ -138,11 +142,12 @@ Profiles in `themes/` change colors only; Sway bindings, services, and layouts s
 
 ```sh
 theme oled-black
+theme amber-crt
 theme solarized-dark
 theme solarized-light
 ```
 
-`oled-black` is the default. Ghostty needs its normal reload shortcut (`Ctrl+Shift+,`) after a switch; Neovim applies the selected profile when it gains focus.
+`oled-black` is the default. `amber-crt` uses warm amber phosphor colors on a near-black background. Ghostty needs its normal reload shortcut (`Ctrl+Shift+,`) after a switch; Neovim applies the selected profile when it gains focus.
 
 To add a profile, copy an existing directory under `themes/`, then provide `appearance`, `sway.conf`, `waybar.css`, `mako.conf`, `ghostty.conf`, `tmux.conf`, and `nvim.lua`.
 
@@ -153,7 +158,7 @@ To add a profile, copy an existing directory under `themes/`, then provide `appe
 These install automatically on first `nvim` launch:
 
 | Language | Server |
-|----------|--------|
+| ---------- | -------- |
 | TypeScript / JS | `ts_ls` |
 | Python | `pyright` |
 | Go | `gopls` |
@@ -181,4 +186,3 @@ machine-specific paths, etc.). It's sourced automatically and is gitignored.
 - Heavy Neovim distros (LazyVim, AstroNvim)
 - Auto-formatters / linters wired up globally (add per-project as needed)
 - Anything I don't use weekly
-

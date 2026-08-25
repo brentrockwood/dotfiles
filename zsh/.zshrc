@@ -96,17 +96,6 @@ fi
 
 export PATH=$HOME/bin:$HOME/.cargo/bin:$HOME/.local/bin:$PATH
 
-# --- Optional tools (add one at a time) ----------------------------
-# zsh-autosuggestions + zsh-syntax-highlighting
-# Install: brew install zsh-autosuggestions zsh-syntax-highlighting
-# zsh-syntax-highlighting must be sourced last
-if brew_prefix=$(brew --prefix 2>/dev/null); then
-  [[ -f "$brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && \
-    source "$brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-  [[ -f "$brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
-    source "$brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-fi
-
 # --- Supply-chain wrappers ----------------------------------------
 # npm-safe: checks each package's latest-version publish age before installing.
 # Blocks anything published less than 5 days ago.
@@ -184,7 +173,7 @@ PYEOF
     fi
   done
   (( blocked )) && return 1
-  pip install "$@"
+  python3 -m pip install "$@"
 }
 
 # Added by LM Studio CLI (lms)
@@ -212,4 +201,27 @@ source <(fzf --zsh)
 
 # zoxide (directory jumping)
 eval "$(zoxide init zsh)"
+
+# Zsh plugins are installed from the system package manager on Linux, or
+# Homebrew on macOS. Syntax highlighting must be sourced last.
+source_first_available() {
+  local path
+  for path in "$@"; do
+    if [[ -r "$path" ]]; then
+      source "$path"
+      return 0
+    fi
+  done
+  return 1
+}
+
+source_first_available \
+  /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh \
+  /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh \
+  "$(brew --prefix 2>/dev/null)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source_first_available \
+  /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+  /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+  "$(brew --prefix 2>/dev/null)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+unfunction source_first_available
 

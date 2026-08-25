@@ -117,6 +117,9 @@ bindsym XF86Launch2 exec $HOME/bin/screenshot
 # Apply the laptop power policy; the script ignores duplicate starts on reload.
 exec_always --no-startup-id $HOME/bin/power-profile-policy
 
+# This SoundWire card exposes the physical speakers as PCM device 2.
+exec_always --no-startup-id $HOME/bin/audio-route
+
 # PolicyKit authorizes changes from the graphical network and Bluetooth applets.
 exec_always --no-startup-id sh -c 'pgrep -f "[p]olkit-kde-authentication-agent-1" >/dev/null || exec /usr/lib/polkit-kde-authentication-agent-1'
 

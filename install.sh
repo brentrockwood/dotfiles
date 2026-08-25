@@ -42,6 +42,7 @@ link "$DOTFILES_DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
 link "$DOTFILES_DIR/tmux/theme.sh" "$HOME/.config/tmux/theme.sh"
 link "$DOTFILES_DIR/bin/claude-statusline.sh" "$HOME/bin/claude-statusline.sh"
 link "$DOTFILES_DIR/bin/power-profile-policy" "$HOME/bin/power-profile-policy"
+link "$DOTFILES_DIR/bin/audio-route" "$HOME/bin/audio-route"
 link "$DOTFILES_DIR/bin/screenshot" "$HOME/bin/screenshot"
 link "$DOTFILES_DIR/bin/tmux-copy" "$HOME/bin/tmux-copy"
 link "$DOTFILES_DIR/bin/theme" "$HOME/bin/theme"
@@ -54,4 +55,3 @@ echo "Next steps:"
 echo "  1. Install Neovim if you want: https://neovim.io"
 echo "  2. Restart your terminal, or run: exec zsh"
 echo
-

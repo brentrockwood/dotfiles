@@ -25,15 +25,10 @@ All user-editable configuration lives in this repository and is symlinked into `
 Install the desktop packages once:
 
 ```sh
-sudo pacman -S --needed \
-  sway waybar wofi ghostty \
-  swaylock swayidle mako \
-  networkmanager network-manager-applet blueman polkit-kde-agent \
-  pipewire-pulse wireplumber pavucontrol playerctl \
-  brightnessctl grim slurp wl-clipboard \
-  power-profiles-daemon upower
-sudo systemctl enable --now NetworkManager bluetooth
+./arch_desktop_prereqs.sh
 ```
+
+`apt_desktop_prereqs.sh` provides the corresponding Debian/Ubuntu package set. Ghostty is not generally in Debian's repositories, so install it separately there or select another terminal in the Sway config.
 
 `wev` is useful only for identifying unusual laptop keys:
 
@@ -91,6 +86,7 @@ It does **not** automatically suspend. Automatic suspend by power mode is intent
 Sway starts or maintains the following on each config reload:
 
 - `power-profile-policy` — one instance is protected by a runtime lock
+- `audio-route` — selects the dedicated SoundWire speaker PCM device on the Yoga 7, avoiding the silent Jack Out fallback
 - KDE PolicyKit agent — required for privileged graphical network/Bluetooth changes
 - `nm-applet --indicator` — NetworkManager tray menu
 - `blueman-applet` — Bluetooth tray menu and manager
