@@ -2,7 +2,7 @@ font-family = Menlo
 window-padding-x = 10
 config-file = theme.conf
 macos-secure-input-indication = false
-custom-shader = /home/br/.config/ghostty/shaders/cursor_warp.glsl
-custom-shader = /home/br/.config/ghostty/shaders/sonic_boom_cursor.glsl
+custom-shader = shaders/cursor_warp.glsl
+custom-shader = shaders/sonic_boom_cursor.glsl
 custom-shader-animation = always
 keybind = media_track_previous=text:\x03cd -\r
