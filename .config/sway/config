@@ -25,6 +25,10 @@ bindsym $mod+d exec $menu
 bindsym $mod+space exec $menu
 bindsym $mod+Shift+slash exec sh -c 'chromium --user-data-dir=/tmp/sway-cheatsheet-chromium --allow-file-access-from-files --app="file://$HOME/src/dotfiles/SWAY-CHEATSHEET.html"'
 for_window [title="Sway cheatsheet"] floating enable, resize set 1000 px 800 px, move position center
+# Open utility dialogs as centered floating windows.
+for_window [app_id="org.pulseaudio.pavucontrol"] floating enable, resize set 900 px 650 px, move position center
+for_window [app_id="nm-connection-editor"] floating enable, resize set 900 px 650 px, move position center
+for_window [app_id="blueman-manager"] floating enable, resize set 900 px 650 px, move position center
 bindsym $mod+Shift+s exec sh -c 'swaylock -f -c 000000 && swaymsg "output * power off"'
 bindsym $mod+Shift+q kill
 bindsym $mod+Shift+c reload
