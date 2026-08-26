@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Change the default output volume and show a short Wayland overlay.
+set -euo pipefail
+
+sink='@DEFAULT_SINK@'
+case ${1:-} in
+  up) pactl set-sink-volume "$sink" +5% ;;
+  down) pactl set-sink-volume "$sink" -5% ;;
+  mute) pactl set-sink-mute "$sink" toggle ;;
+  *)
+    printf 'Usage: %s <up|down|mute>\n' "${0##*/}" >&2
+    exit 2
+    ;;
+esac
+
+volume=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf "%d", $2 * 100 + 0.5}')
+state=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
+if [[ $state == *MUTED* ]]; then
+  printf '%s muted\n' "$volume" >"${XDG_RUNTIME_DIR:-/run/user/$UID}/wob.sock"
+  exit 0
+fi
+
+printf '%s\n' "$volume" >"${XDG_RUNTIME_DIR:-/run/user/$UID}/wob.sock"
+
+# Provide feedback only when it will not interrupt active playback.
+if [[ ${1:-} != mute ]] && ! playerctl --all-players status 2>/dev/null | grep -qx Playing; then
+  pw-play /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga >/dev/null 2>&1 &
+fi

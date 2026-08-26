@@ -7,6 +7,6 @@ sudo apt-get update -qq
 sudo apt-get install -y \
   blueman brightnessctl grim mako-notifier network-manager network-manager-gnome \
   pavucontrol playerctl polkit-kde-agent-1 power-profiles-daemon slurp sway swayidle \
-  swaylock upower waybar wofi wireplumber pipewire-pulse
+  swaylock upower waybar wob wofi wireplumber pipewire-pulse
 
 sudo systemctl enable --now NetworkManager bluetooth

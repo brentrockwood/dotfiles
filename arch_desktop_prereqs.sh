@@ -5,6 +5,6 @@ set -euo pipefail
 sudo pacman -Syu --needed \
   blueman brightnessctl ghostty grim mako networkmanager network-manager-applet \
   pavucontrol playerctl polkit-kde-agent power-profiles-daemon slurp sway swayidle \
-  swaylock upower waybar wofi wireplumber pipewire-pulse
+  swaylock upower waybar wob wofi wireplumber pipewire-pulse
 
 sudo systemctl enable --now NetworkManager bluetooth
