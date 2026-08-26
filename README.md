@@ -58,7 +58,9 @@ Debian-based Linux:
 
 Both scripts install the same interactive Zsh baseline: Zsh, tmux, fzf, zoxide, Starship, Neovim, ripgrep, Node/NVM, uv, Python/pip, Rust/Cargo, Go, and Zsh autosuggestions plus syntax highlighting.
 
-For the optional Sway desktop stack, use `./arch_desktop_prereqs.sh` or `./apt_desktop_prereqs.sh`. Debian does not generally package Ghostty, so install it separately there or change the terminal command in the Sway config.
+For the optional Sway desktop stack, use `./arch_desktop_prereqs.sh` or `./apt_desktop_prereqs.sh`. These also install Qalculate for the calculator-key scratchpad. Debian does not generally package Ghostty, so install it separately there or change the terminal command in the Sway config.
+
+The tested hibernation setup depends on this machine's LUKS, Btrfs, swapfile, and Limine identifiers and is therefore not applied by `install.sh`.
 
 `ripgrep` is required for Telescope's live grep (`<leader>fg`); `tree-sitter-cli` builds parser updates.
 

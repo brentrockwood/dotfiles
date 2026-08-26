@@ -1,0 +1,159 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+readonly display_device=/org/freedesktop/UPower/devices/DisplayDevice
+readonly request_marker="${XDG_RUNTIME_DIR:?}/idle-suspend-policy.requested"
+mode=check
+dry_run=false
+
+usage() {
+  printf 'Usage: %s [--check|--monitor|--reset|--status] [--dry-run]\n' "${0##*/}" >&2
+  exit 2
+}
+
+for arg in "$@"; do
+  case $arg in
+    --check|--monitor|--reset|--status) mode=${arg#--} ;;
+    --dry-run) dry_run=true ;;
+    *) usage ;;
+  esac
+done
+
+power_state() {
+  if [[ -n ${IDLE_SUSPEND_POWER_STATE:-} ]]; then
+    printf '%s\n' "$IDLE_SUSPEND_POWER_STATE"
+    return
+  fi
+
+  upower -i "$display_device" |
+    awk -F: '/^[[:space:]]*state:/ {
+      gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2)
+      print $2
+      exit
+    }'
+}
+
+session_id() {
+  local id
+  id=$(loginctl show-user "$(id -u)" -p Display --value)
+  if [[ -n $id ]]; then
+    printf '%s\n' "$id"
+    return
+  fi
+
+  loginctl list-sessions --no-legend |
+    awk -v uid="$(id -u)" '$2 == uid && $6 == "user" { print $1; exit }'
+}
+
+session_is_idle() {
+  local id
+  id=$(session_id)
+  [[ -n $id ]] && [[ $(loginctl show-session "$id" -p IdleHint --value) == yes ]]
+}
+
+on_battery() {
+  case $(power_state) in
+    discharging|pending-discharge) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+can_suspend_then_hibernate() {
+  busctl call \
+    org.freedesktop.login1 \
+    /org/freedesktop/login1 \
+    org.freedesktop.login1.Manager \
+    CanSuspendThenHibernate 2>/dev/null | grep -q '"yes"'
+}
+
+request_suspend() {
+  if ! can_suspend_then_hibernate; then
+    logger -t idle-suspend-policy 'suspend-then-hibernate is unavailable'
+    return 1
+  fi
+
+  if $dry_run; then
+    printf 'would request suspend-then-hibernate\n'
+    return
+  fi
+
+  logger -t idle-suspend-policy 'idle on battery; requesting suspend-then-hibernate'
+  systemctl suspend-then-hibernate
+}
+
+reset_request() {
+  rm -f "$request_marker"
+}
+
+mark_request() {
+  (set -o noclobber; : >"$request_marker") 2>/dev/null
+}
+
+request_once() {
+  if $dry_run; then
+    printf 'would request suspend-then-hibernate\n'
+    return
+  fi
+
+  mark_request || return 0
+  request_suspend || logger -t idle-suspend-policy 'suspend request failed; waiting for activity or AC before retry'
+}
+
+check_now() {
+  if on_battery; then
+    request_once
+  else
+    reset_request
+    $dry_run && printf 'would remain awake on AC power\n'
+  fi
+}
+
+monitor_power() {
+  exec 9>"${XDG_RUNTIME_DIR:?}/idle-suspend-policy.lock"
+  flock -n 9 || exit 0
+
+  while true; do
+    if ! on_battery || ! session_is_idle; then
+      reset_request
+    elif [[ ! -e $request_marker ]]; then
+      request_once
+      # Allow swayidle to clear IdleHint after resume before processing queued
+      # UPower notifications.
+      sleep 10
+    fi
+
+    # --monitor emits one line per device change; --monitor-detail emits a
+    # multi-line block that would evaluate the same event repeatedly.
+    while IFS= read -r _; do
+      if ! on_battery || ! session_is_idle; then
+        reset_request
+      elif [[ ! -e $request_marker ]]; then
+        request_once
+        sleep 10
+      fi
+    done < <(upower --monitor 9>&-)
+    sleep 5
+  done
+}
+
+show_status() {
+  local id idle=no
+  id=$(session_id)
+  if [[ -n $id ]]; then
+    idle=$(loginctl show-session "$id" -p IdleHint --value)
+  fi
+  printf 'power_state=%s\nsession=%s\nidle=%s\nrequest_latched=%s\n' \
+    "$(power_state)" "${id:-none}" "$idle" "$([[ -e $request_marker ]] && printf yes || printf no)"
+  if can_suspend_then_hibernate; then
+    printf 'suspend_then_hibernate=yes\n'
+  else
+    printf 'suspend_then_hibernate=no\n'
+  fi
+}
+
+case $mode in
+  check) check_now ;;
+  monitor) monitor_power ;;
+  reset) reset_request ;;
+  status) show_status ;;
+esac

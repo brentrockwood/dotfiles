@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Toggle a persistent Qalculate terminal in Sway's scratchpad.
+set -euo pipefail
+
+fail() {
+  printf 'toggle-calc: %s\n' "$1" >&2
+  command -v notify-send >/dev/null && notify-send 'Calculator failed' "$1" || true
+  exit 1
+}
+
+for command_name in ghostty jq qalc swaymsg; do
+  command -v "$command_name" >/dev/null || fail "Missing required command: $command_name"
+done
+
+app_id='com.br.Calculator'
+if swaymsg -t get_tree -r | jq -e --arg app_id "$app_id" \
+  '.. | objects | select(.app_id? == $app_id)' >/dev/null; then
+  swaymsg "[app_id=\"$app_id\"] scratchpad show" >/dev/null
+else
+  ghostty --class="$app_id" --title=Calculator -e qalc &
+  for _ in {1..20}; do
+    sleep 0.1
+    if swaymsg -t get_tree -r | jq -e --arg app_id "$app_id" \
+      '.. | objects | select(.app_id? == $app_id)' >/dev/null; then
+      swaymsg "[app_id=\"$app_id\"] scratchpad show" >/dev/null
+      exit 0
+    fi
+  done
+  fail 'Qalculate window did not appear within two seconds'
+fi

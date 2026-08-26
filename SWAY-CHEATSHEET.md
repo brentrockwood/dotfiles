@@ -2,12 +2,13 @@
 
 This is the quick reference for this dotfiles configuration. `Super` means the Windows/Command key.
 
-## First five things
+## First things
 
 | Key | What it does |
 | --- | --- |
 | `Super+Enter` | Open Ghostty |
 | `Super+D` / `Super+Space` | Open Wofi application launcher; type to search, `Enter` to launch |
+| Calculator key | Toggle the Qalculate scratchpad |
 | `Super+H/J/K/L` | Focus left/down/up/right |
 | `Super+1` … `Super+0` | Switch to workspace 1 … 10 |
 | `Super+Shift+S` | Lock immediately and turn off the OLED |
@@ -117,7 +118,16 @@ The desktop changes power profile automatically:
 
 Clicking the profile icon is a temporary manual override. It lasts until a power or battery state change.
 
-After five idle minutes, the session locks and the OLED powers off. Input wakes it to the lock screen. The machine locks before suspend, but does not automatically suspend yet.
+After ten idle minutes, the session locks and the OLED powers off. Input wakes it to the lock screen.
+
+| Event | Power behavior |
+| --- | --- |
+| 30 minutes idle on battery | Suspend, then hibernate after one hour if still on battery |
+| 30 minutes idle on AC | Stay awake; unplugging while still idle initiates suspend-then-hibernate |
+| Lid close or sleep key | Suspend-then-hibernate; the one-hour countdown runs only on battery |
+| Battery reaches 8% while awake | Hibernate immediately |
+
+Suspend keeps a quick wake window but still consumes battery. Hibernation saves the session to encrypted disk swap and powers off completely.
 
 ## Clipboard and tmux
 

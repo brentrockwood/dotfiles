@@ -1,18 +1,22 @@
 # Sway desktop setup
 
-This is the portable, dark Sway setup for the HP OmniBook X Flip. It is intentionally small: Sway owns window management; Waybar owns status; the tray owns graphical network and Bluetooth controls.
+This is the portable, dark Sway setup currently validated on a Lenovo Yoga 7 2-in-1 14IPH11 (83TC). It is intentionally small: Sway owns window management, Waybar owns status and connectivity launchers, and focused helpers handle power, audio, locking, and screenshots.
 
 ## Canonical files
 
-All user-editable configuration lives in this repository and is symlinked into `~` by [`install.sh`](install.sh).
+Portable user configuration lives in this repository and is symlinked into `~` by [`install.sh`](install.sh). Machine-specific `/etc` hibernation and critical-battery settings are intentionally not installed from dotfiles.
 
 | Repository path | Installed path | Purpose |
 | --- | --- | --- |
-| `.config/sway/config` | `~/.config/sway/config` | Sway, bindings, startup processes, input, lock/idle policy |
+| `.config/sway/config` | `~/.config/sway/config` | Sway, bindings, startup processes, and input policy |
+| `.config/swayidle/config` | `~/.config/swayidle/config` | Idle locking, display power, and battery-aware sleep timing |
+| `.config/swaylock/config` | `~/.config/swaylock/config` | Password lockscreen appearance |
 | `.config/waybar/config.jsonc` | `~/.config/waybar/config.jsonc` | Waybar modules |
 | `.config/waybar/style.css` | `~/.config/waybar/style.css` | Dark Waybar styling |
 | `.config/mako/config` | `~/.config/mako/config` | Dark notification popups |
 | `bin/power-profile-policy` | `~/bin/power-profile-policy` | Automatic power-profile policy |
+| `bin/idle-suspend-policy` | `~/bin/idle-suspend-policy` | Battery-aware suspend-then-hibernate policy |
+| `bin/toggle-calc` | `~/bin/toggle-calc` | Persistent Qalculate scratchpad toggle |
 | `bin/screenshot` | `~/bin/screenshot` | Region screenshots saved with UTC filenames |
 | `bin/tmux-copy` | `~/bin/tmux-copy` | Cross-platform tmux-to-system-clipboard bridge |
 | `tmux/tmux.conf` | `~/.tmux.conf` | tmux bindings, including clipboard copy mode |
@@ -48,9 +52,9 @@ The general CLI prerequisite scripts also install `wl-clipboard` and `xclip` so 
 
 ## Current machine assumptions
 
-- **Machine:** HP OmniBook X Flip 2-in-1
+- **Machine:** Lenovo Yoga 7 2-in-1 14IPH11 (83TC)
 - **Panel:** `eDP-1`, 1920×1200 OLED, 60 Hz, scale `1.0`
-- **Theme:** dark, solid `#101216` OLED-friendly background
+- **Theme:** `oled-black` is the repository default; this machine currently uses `amber-crt`, with pure black on selected primary Ghostty, Neovim, and tmux surfaces while secondary surfaces retain warm near-black tones
 - **Primary applications:** Ghostty, tmux, Neovim, Google Chrome
 - **Interaction model:** keyboard-first tiling; no focus-follows-mouse; a touchpad gets natural scrolling while mouse wheels keep traditional scrolling
 - **Tablet mode:** touchscreen and stylus are detected but no rotation/tablet automation is configured; this is intentional because tablet use is rare
@@ -68,30 +72,30 @@ The general CLI prerequisite scripts also install `wl-clipboard` and `xclip` so 
 - The pointer hides on keyboard input and returns when moved.
 - Touchpad tapping, natural scrolling, and disable-while-typing are enabled.
 
-### Locking and idle policy
+### Locking, idle, and sleep policy
 
-`Super+Shift+S` locks with a black Swaylock screen, then powers off the outputs. Any input wakes the OLED back to the still-locked screen.
+`Super+Shift+S` locks with Swaylock, then powers off the outputs. Any input wakes the OLED back to the still-locked screen. The Lenovo hardware lock key emits the same `Super+L` sequence used for Vim-style focus-right, so that key is intentionally not bound.
 
-`swayidle` also:
+`swayidle` and `idle-suspend-policy` implement this sequence:
 
-1. waits five minutes of inactivity;
-2. locks with Swaylock and powers off the OLED;
-3. powers outputs back on when input resumes; and
-4. locks before system suspend.
+1. after 10 minutes idle, lock and power off the OLED;
+2. after 30 minutes idle on battery, request suspend-then-hibernate;
+3. remain awake indefinitely on AC, but suspend if AC is disconnected after the session is already idle;
+4. lock before any system sleep; and
+5. restore output power after resume or unlock.
 
-It does **not** automatically suspend. Automatic suspend by power mode is intentionally deferred.
+Lid close and the sleep key use suspend-then-hibernate. Suspend converts to encrypted-disk hibernation after one hour on battery, and UPower hibernates an awake machine at 8%. A real power-off/resume round trip was verified. The required LUKS/Btrfs swapfile, Limine resume arguments, logind drop-in, sleep drop-in, and UPower thresholds are machine-specific system configuration outside `install.sh`.
 
 ### Startup services
 
 Sway starts or maintains the following on each config reload:
 
-- `power-profile-policy` — one instance is protected by a runtime lock
+- `power-profile-policy` — one monitor is protected by a runtime lock
+- `idle-suspend-policy --monitor` — watches AC changes after the session becomes idle
 - `audio-route` — selects the dedicated SoundWire speaker PCM device on the Yoga 7, avoiding the silent Jack Out fallback
 - KDE PolicyKit agent — required for privileged graphical network/Bluetooth changes
-- `nm-applet --indicator` — NetworkManager tray menu
-- `blueman-applet` — Bluetooth tray menu and manager
 - `mako` — notification daemon
-- `swayidle` — lock/display power policy
+- `swayidle` — lock, output power, idle hint, and sleep timing
 - `waybar` — status bar
 
 NetworkManager and `bluetooth.service` must be enabled system services. PipeWire/WirePlumber provide audio; Sway binds media keys through `pactl` and `playerctl`.
@@ -105,11 +109,13 @@ The 32 px top bar contains:
 | Left | Sway workspaces | Active workspace is highlighted; scroll switching is disabled |
 | Center | Focused window title | Truncated to 60 characters |
 | Right | Volume | Nerd Font level icon; hover shows percentage; click opens Pavucontrol |
+| Right | Network | Native Wi-Fi/Ethernet state; click opens NetworkManager's connection editor |
+| Right | Bluetooth | Native adapter/device state; click opens Blueman Manager |
 | Right | Power group | Battery icon plus power-profile icon |
 | Right | Clock | Click to show ISO date; hover shows calendar |
-| Right | Tray | NetworkManager, Blueman, Tailscale, and other tray apps |
+| Right | Tray | Tailscale and other remaining tray applications |
 
-The NetworkManager tray icon is the only Wi-Fi status/control. Its menu manages Wi-Fi, Ethernet, VPN, and connections. Blueman is the Bluetooth control; normal click may open Blueman Manager and its context menu supplies compact actions.
+Waybar's native network and Bluetooth modules provide themed status icons. Clicking network opens `nm-connection-editor`; clicking Bluetooth opens Blueman Manager. Sway stops `nm-applet` and `blueman-applet` on reload to avoid duplicate, unthemeable tray icons. `nmtui`, `nmcli`, and `bluetoothctl` remain terminal fallbacks.
 
 ### Battery and profile indicators
 
@@ -118,7 +124,7 @@ Battery is icon-only in the bar. Hover shows percentage and estimated remaining/
 - charging: lightning icon
 - plugged but not charging: plug icon
 - discharging: capacity icon
-- warning at 30%; critical at 15%
+- low-state icon at 20%; UPower separately hibernates at its configured 8% action threshold
 
 The adjacent profile icon is lightning (**performance**), scales (**balanced**), or leaf (**power-saver**). Hover shows the profile and driver. Clicking it cycles profiles; the automatic policy intentionally does not immediately undo that manual choice.
 
@@ -156,7 +162,7 @@ notify-send 'Mako is ready' 'Test notification'
 
 ### Screenshots
 
-Both `Print` and the OmniBook screenshot key (`XF86Launch2`; the screenshot/F11 physical key) run `~/bin/screenshot`.
+Both `Print` and the Lenovo screenshot/F11 key (`XF86Launch2`) run `~/bin/screenshot`.
 
 1. Press the key.
 2. Drag a region using Slurp.
@@ -214,7 +220,6 @@ Do not add these until they solve an observed problem:
 - fixed application-to-workspace assignments or window rules
 - clipboard history
 - automatic tablet rotation, stylus workflows, or tablet mode
-- automatic suspend policy
 - a dedicated power-profile popup menu
 - a notification history center
 - extra CPU/RAM/temperature/media Waybar modules
@@ -227,7 +232,8 @@ Useful checks:
 sway -C -c ~/.config/sway/config        # validate Sway syntax
 swaymsg reload                          # apply Sway config
 swaymsg -t get_config                   # inspect the live loaded config
-pgrep -af 'waybar|mako|swayidle'        # inspect desktop helpers
+pgrep -af 'waybar|mako|swayidle|idle-suspend-policy'  # inspect desktop helpers
+~/bin/idle-suspend-policy --status       # power source, idle hint, sleep capability
 powerprofilesctl get                    # active power profile
 upower -i /org/freedesktop/UPower/devices/DisplayDevice
 nmcli general status                    # NetworkManager state

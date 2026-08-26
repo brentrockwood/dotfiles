@@ -1,0 +1,19 @@
+# Keep a resume hook armed so input wakes a display powered off by swaylock.
+timeout 1 "true" resume "swaymsg 'output * power on'"
+
+# Lock after 10 minutes, then immediately power off the display.
+# Any input powers the display back on; swaylock remains responsible for auth.
+timeout 600 "swaylock -f && swaymsg 'output * power off'"
+
+# After 30 minutes, sleep only on battery. The idle hint lets the power monitor
+# catch an AC disconnect that happens after this timeout has already elapsed.
+idlehint 1800
+timeout 1800 "$HOME/bin/idle-suspend-policy --check" resume "$HOME/bin/idle-suspend-policy --reset"
+
+# Lock before suspend and when logind explicitly requests a session lock.
+before-sleep "swaylock -f"
+lock "swaylock -f && swaymsg 'output * power off'"
+
+# Ensure the display is on after resume or an explicit unlock.
+after-resume "$HOME/bin/idle-suspend-policy --reset; swaymsg 'output * power on'"
+unlock "swaymsg 'output * power on'"

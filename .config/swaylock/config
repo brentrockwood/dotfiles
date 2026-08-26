@@ -1,0 +1,28 @@
+# swaylock config — amber-crt theming (v1.8.6 compatible)
+# Colors: background #100a00, amber accent #b87500, bright amber #ffb400
+
+color=100a00ff
+
+ring-color=b87500ff
+ring-clear-color=100a00ff
+ring-caps-lock-color=b87500ff
+ring-ver-color=ffb400ff
+ring-wrong-color=ff3333ff
+
+line-color=b87500ff
+line-clear-color=100a00ff
+
+inside-color=b87500ff
+inside-clear-color=100a00ff
+inside-ver-color=ffb400ff
+inside-wrong-color=ff3333ff
+
+key-hl-color=ffb400ff
+caps-lock-key-hl-color=ffb400ff
+caps-lock-bs-hl-color=ffb400ff
+bs-hl-color=ffb400ff
+separator-color=00000000
+
+indicator-caps-lock
+font=Noto Sans
+font-size=16
