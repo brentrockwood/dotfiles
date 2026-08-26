@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Open files, directories, and URLs with their desktop-default applications.
+set -euo pipefail
+
+if (($# == 0)); then
+  set -- .
+fi
+
+for target in "$@"; do
+  xdg-open "$target" &
+done
