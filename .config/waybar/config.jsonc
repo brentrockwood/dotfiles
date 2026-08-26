@@ -43,16 +43,12 @@
   },
   "group/power": {
     "orientation": "horizontal",
-    "modules": ["battery", "power-profiles-daemon"]
+    "modules": ["custom/battery", "power-profiles-daemon"]
   },
-  "battery": {
-    "states": { "warning": 30, "critical": 15 },
-    "format": "{icon}",
-    "format-charging": "",
-    "format-plugged": "",
-    "format-alt": "{time} remaining",
-    "tooltip-format": "Battery: {capacity}%\n{time}",
-    "format-icons": ["", "", "", "", ""]
+  "custom/battery": {
+    "exec": "$HOME/bin/battery-status",
+    "return-type": "json",
+    "interval": 10
   },
   "power-profiles-daemon": {
     "format": "{icon}",

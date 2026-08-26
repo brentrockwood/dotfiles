@@ -25,7 +25,8 @@ window#waybar {
 }
 
 #workspaces button.urgent,
-#battery.critical:not(.charging) {
+#custom-battery.low,
+#custom-battery.error {
   color: #ff7b72;
 }
 
@@ -36,7 +37,7 @@ window#waybar {
 #network,
 #bluetooth,
 #pulseaudio,
-#battery,
+#custom-battery,
 #power-profiles-daemon,
 #clock,
 #tray {
@@ -50,13 +51,14 @@ window#waybar {
 }
 
 #pulseaudio,
-#battery,
+#custom-battery,
 #power-profiles-daemon {
   font-size: 20px;
 }
 
-#battery.charging,
-#battery.plugged,
+#custom-battery.charging,
+#custom-battery.full,
+#custom-battery.ac,
 #power-profiles-daemon.power-saver {
   color: #8bd5a0;
 }

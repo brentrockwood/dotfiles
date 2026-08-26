@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+# Emit a compact, state-aware UPower battery status for Waybar's custom module.
+set -euo pipefail
+
+battery=$(upower -e 2>/dev/null | awk '/battery/ { print; exit }')
+if [[ -z $battery ]]; then
+  jq -cn --arg text '' --arg tooltip 'Battery unavailable' --arg class error \
+    '{text: $text, tooltip: $tooltip, class: $class}'
+  exit 0
+fi
+
+info=$(upower -i "$battery" 2>/dev/null) || {
+  jq -cn --arg text '' --arg tooltip 'Unable to read battery status' --arg class error \
+    '{text: $text, tooltip: $tooltip, class: $class}'
+  exit 0
+}
+
+field() {
+  awk -F: -v key="$1" '$1 ~ "^[[:space:]]*" key "[[:space:]]*$" {
+    sub(/^[[:space:]]+/, "", $2); print $2; exit
+  }' <<<"$info"
+}
+
+state=$(field state)
+capacity=$(field percentage | tr -d '%')
+time_empty=$(field 'time to empty')
+time_full=$(field 'time to full')
+
+case $state in
+  fully-charged)
+    icon=''
+    class=full
+    printf -v tooltip 'Fully charged\nBattery: %s%%' "$capacity"
+    ;;
+  charging)
+    icon='󰂄'
+    class=charging
+    printf -v tooltip 'Charging\nBattery: %s%%\nTime until full: %s' "$capacity" "${time_full:-Estimate unavailable}"
+    ;;
+  discharging)
+    if (( capacity <= 20 )); then
+      icon=''
+      class=low
+    elif (( capacity <= 60 )); then
+      icon=''
+      class=discharging
+    else
+      icon=''
+      class=discharging
+    fi
+    printf -v tooltip 'On battery\nBattery: %s%%\nTime remaining: %s' "$capacity" "${time_empty:-Estimate unavailable}"
+    ;;
+  pending-charge|pending-discharge)
+    icon=''
+    class=ac
+    printf -v tooltip 'On AC\nBattery: %s%%' "$capacity"
+    ;;
+  *)
+    icon=''
+    class=error
+    printf -v tooltip 'Battery status unavailable\nReported state: %s\nBattery: %s%%' "${state:-unknown}" "${capacity:-unknown}"
+    ;;
+esac
+
+jq -cn --arg text "$icon" --arg tooltip "$tooltip" --arg class "$class" \
+  '{text: $text, tooltip: $tooltip, class: $class}'
