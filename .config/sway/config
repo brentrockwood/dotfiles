@@ -23,7 +23,7 @@ seat seat0 hide_cursor when-typing enable
 bindsym $mod+Return exec $term
 bindsym $mod+d exec $menu
 bindsym $mod+space exec $menu
-bindsym $mod+Shift+slash exec sh -c 'chromium --user-data-dir=/tmp/sway-cheatsheet-chromium --allow-file-access-from-files --app="file://$HOME/src/dotfiles/SWAY-CHEATSHEET.html"'
+bindsym $mod+Shift+slash exec $HOME/bin/sway-cheatsheet
 for_window [title="Sway cheatsheet"] floating enable, resize set 1000 px 800 px, move position center
 # Open utility dialogs as centered floating windows.
 for_window [app_id="org.pulseaudio.pavucontrol"] floating enable, resize set 900 px 650 px, move position center

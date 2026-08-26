@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+url="file://$HOME/.config/sway/SWAY-CHEATSHEET.html"
+for browser in google-chrome-stable google-chrome chromium; do
+  if command -v "$browser" >/dev/null; then
+    exec "$browser" --user-data-dir=/tmp/sway-cheatsheet-chromium --allow-file-access-from-files --app="$url"
+  fi
+done
+
+exec xdg-open "$url"

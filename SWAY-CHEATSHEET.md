@@ -79,8 +79,8 @@ The physical media/brightness keys work even while Sway is locked.
 
 | Key | Action |
 | --- | --- |
-| Volume down/up | Decrease/increase output volume by 5% |
-| Mute | Toggle output mute |
+| Volume down/up | Decrease/increase output volume by 5% and show a brief overlay |
+| Mute | Toggle output mute and show a muted overlay |
 | Microphone mute | Toggle microphone mute |
 | Play/pause, previous, next, stop | Control the active media player |
 | Brightness down/up | Change OLED brightness by 5% |
@@ -94,15 +94,15 @@ From left to right:
 - **Workspaces** — active workspace is highlighted.
 - **Window title** — title of the focused application.
 - **Volume icon** — icon shape shows volume level; hover for exact percentage; click to open Pavucontrol.
-- **Battery icon** — hover for percentage and estimated remaining/charging time. Lightning means charging; plug means AC is present but the battery is not charging.
+- **Battery icon** — hover for percentage and estimated remaining/charging time. A plug means full/on AC; the battery glyph tracks discharge level and turns red at 20%.
 - **Power-profile icon** — lightning = performance, scales = balanced, leaf = power saver. Hover for details; click to cycle profile.
 - **Clock** — click for ISO date; hover for calendar.
-- **Tray** — graphical NetworkManager, Blueman, Tailscale, and other applets.
+- **Tray** — other graphical applets, when present.
 
 ### Network and Bluetooth
 
-- Click the **NetworkManager tray icon** to join Wi-Fi, manage Ethernet/VPN, or edit connections.
-- Click the **Blueman tray icon** for Bluetooth controls. It may open Blueman Manager; use its context menu for compact actions.
+- Click the **Network icon** to edit Wi-Fi, Ethernet, and VPN connections.
+- Click the **Bluetooth icon** to open Blueman Manager.
 
 ## Automatic power behavior
 
