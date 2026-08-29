@@ -46,6 +46,7 @@
     "modules": ["custom/battery", "power-profiles-daemon"]
   },
   "custom/battery": {
+    "exec-if": "$HOME/bin/has-battery",
     "exec": "$HOME/bin/battery-status",
     "return-type": "json",
     "interval": 10

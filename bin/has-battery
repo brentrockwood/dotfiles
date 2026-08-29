@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Return success when this machine exposes a real battery.
+set -euo pipefail
+
+# Prefer UPower when available because it abstracts platform-specific details.
+if command -v upower >/dev/null 2>&1 && upower -e 2>/dev/null | grep -q '/battery'; then
+  exit 0
+fi
+
+# Fall back to sysfs. Some batteries are not named BAT*, so check the supply type.
+for supply in /sys/class/power_supply/*; do
+  [[ -r "$supply/type" ]] || continue
+  if [[ $(<"$supply/type") == Battery ]]; then
+    exit 0
+  fi
+done
+
+exit 1
