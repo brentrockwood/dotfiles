@@ -1,4 +1,5 @@
 font-family = Menlo
+font-size = 10
 window-padding-x = 10
 config-file = theme.conf
 macos-secure-input-indication = false
