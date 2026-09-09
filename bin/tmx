@@ -1,0 +1,10 @@
+#!/bin/sh
+
+[ "$#" -eq 1 ] || {
+  printf 'Usage: %s <name>\n' "${0##*/}" >&2
+  exit 2
+}
+
+mkdir -p "$HOME/src/$1"
+cd "$HOME/src/$1" || exit
+exec tmux new -As "$1"
