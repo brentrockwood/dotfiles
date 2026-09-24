@@ -1,5 +1,7 @@
 # --- Shell basics -------------------------------------------------
 
+export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+
 # --- Editor -------------------------------------------------------
 
 if command -v nvim >/dev/null 2>&1; then

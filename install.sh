@@ -35,6 +35,7 @@ mkdir -p "$HOME/bin"
 
 link "$DOTFILES_DIR/themes/oled-black" "$HOME/.config/dotfiles-theme/current"
 link "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
+link "$DOTFILES_DIR/.ripgreprc" "$HOME/.ripgreprc"
 link "$DOTFILES_DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua"
 link "$DOTFILES_DIR/.config/ghostty/config" "$HOME/.config/ghostty/config"
 link "$DOTFILES_DIR/.config/ghostty/shaders" "$HOME/.config/ghostty/shaders"
