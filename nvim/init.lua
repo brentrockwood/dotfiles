@@ -76,17 +76,18 @@ require("lazy").setup({
     config = apply_solarized,
   },
 
-  -- Treesitter: real parse-tree syntax highlighting + text objects
+  -- Treesitter: parser-backed syntax highlighting and folding
   {
     "nvim-treesitter/nvim-treesitter",
+    lazy = false,
     build = ":TSUpdate",
     config = function()
-      require("nvim-treesitter").setup({
-        ensure_installed = {
-          "bash", "go", "javascript", "lua", "markdown",
-          "python", "rust", "tsx", "typescript",
-        },
-        highlight = { enable = true },
+      require("nvim-treesitter").install({
+        "bash", "go", "javascript", "lua", "markdown",
+        "python", "rust", "tsx", "typescript",
+      })
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function() pcall(vim.treesitter.start) end,
       })
     end,
   },
@@ -141,6 +142,16 @@ require("lazy").setup({
   lockfile = vim.fn.stdpath("state") .. "/lazy-lock.json",
   rocks = { hererocks = false },
 })
+
+-- Folding
+-- Use tree-sitter expression folding if available
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+
+-- Prevent folds from automatically closing when opening a file
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+vim.opt.foldenable = true
 
 -- ── LSP keybindings (active only when LSP attaches to a buffer) ───────────────
 vim.api.nvim_create_autocmd("LspAttach", {

@@ -40,7 +40,7 @@ Minimal, boring, modern dotfiles.
 macOS:
 
 ```sh
-brew install neovim tmux fzf zoxide ripgrep starship \
+brew install neovim tmux fzf zoxide ripgrep starship tree-sitter-cli \
              zsh-autosuggestions zsh-syntax-highlighting
 ```
 
