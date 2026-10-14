@@ -74,6 +74,20 @@ cd ~/src/dotfiles
 ./install.sh
 ```
 
+### Telegram notifications
+
+`install.sh` links `notify` into `~/bin`. It requires `curl` and `jq`.
+Run `notify "Build finished"` to send a message prefixed with the current directory name.
+
+Keep credentials outside the repo in `${XDG_CONFIG_HOME:-$HOME/.config}/telegram-notify/env`:
+
+```sh
+TELEGRAM_BOT_TOKEN='your-bot-token'
+TELEGRAM_BOT_CHATID='your-chat-id'
+```
+
+Restrict that file to your user with `chmod 600`. Existing commands are not overwritten by the installer.
+
 ### tmux session persistence (optional but recommended)
 
 ```sh
