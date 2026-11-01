@@ -1,6 +1,7 @@
 font-family = Menlo
 window-padding-x = 10
 config-file = theme.conf
+minimum-contrast = 4.5
 macos-secure-input-indication = false
 custom-shader = shaders/cursor_warp.glsl
 custom-shader = shaders/sonic_boom_cursor.glsl
