@@ -7,4 +7,5 @@
 
 mkdir -p "$HOME/src/$1"
 cd "$HOME/src/$1" || exit
-exec tmux new -As "$1"
+exec tmux new -As "$1" \; split-window -h \; split-window -v \; select-pane -L
+
